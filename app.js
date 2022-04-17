@@ -17,19 +17,16 @@ db.connect((err) => {
 });
 
 
-
 //Product List API
 
 app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
-    let category = req.params.category;
     const limit = 6;
-    const paging = +req.query.paging;
-    const offset = (paging * limit)+0;
+    let category = req.params.category;
+    let paging = +req.query.paging;
+    let offset = (paging * limit)+0;
     let next_paging = +paging + 1;
-    console.log(category);
-    const sql ="select title,price,color,first_pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset;
-    console.log(sql);
-   db.query(sql,(err, result) => {
+
+    db.query("select title,price,color,first_pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
         if (err) throw err;
         if(result[5]===undefined){
             next_paging = "no more";
@@ -45,13 +42,10 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
 //Product Search API
 
 app.get('/api/v1/products/search', (req,res) => {
-    const keyword = '%'+req.query.keyword+'%';
-    console.log(keyword);
+    let keyword = '%'+req.query.keyword+'%';
     db.query("SELECT title,price,first_pic,color FROM table1 WHERE title like '" +keyword+ "'", function (err,result) {
         if (err) throw err;
-        console.log(result);
         return res.send({data: result});
-        
     });
 });
 
@@ -69,22 +63,7 @@ app.get('/api/v1/products/details/:id',async(req,res)=>{
 
 
 //Product Create API
-// SQL injection
-//修改表格 儲存進不同表格 檔案上傳技術
-
-/*
-const upload = multer({
-    fileFilter(req, file, cb) {
-      if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-        cb(new Error('請上傳圖片'));
-      }else if(fileSize>=1000000){
-          cb(new Error('檔案太大'));
-      }
-      cb(null, true)
-    }
-  })
-
-*/
+// SQL injection 動態表格 儲存進不同表格 上傳多個檔案
 
 app.get('/api/v1/create',function(req,res){
     res.sendFile(__dirname + "/admin/" + "product.html" );
@@ -94,30 +73,40 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 
-app.post('/api/v1/create',(req,res)=>{
-    const category = req.body.category;
-    const title = req.body.title;
-    const number = req.body.number;
-    const price = req.body.price;
-    const info = req.body.info;
-    const description = req.body.description;
-    console.log(price);
-    db.query("INSERT INTO table1 (category, number, title, price, info, description) VALUES (?, ?, ?, ?, ?, ?) ",[category, number, title, price, info, description], (err, result) => {
-        if(err) throw err;
-        res.send("table created");
-    });
-})
-
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+    destination: (req, file, cb) =>{
+      cb(null, './images');
     },
-    filename: function (req, file, cb) {
+    filename: (req, file, cb) => {
       cb(null, Date.now() + path.extname(file.originalname));
     }
-  })
-  
+})
 const upload = multer({ storage: storage });
+
+app.post('/api/v1/create', upload.single('pic'),(req,res)=>{
+    const body = req.body;
+
+    db.query("INSERT INTO table1 (category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?) ",[body.category, body.number, body.title, body.price, body.info, body.description, req.file.path], (err, result) => {
+        if(err) throw err;
+    });
+
+    /*
+    const id = db.query("SELECT LAST_INSERT_ID()" , (err, result) => {
+        if(err) throw err;
+        return result;
+    });
+    */
+    const id = 2;
+
+    db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",[id, body.color, body.size, body.stock], (err, result2) => {
+        if(err) throw err;
+        res.send("table created");     
+    });
+   
+
+})
+
+
 
 
 //SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
@@ -130,6 +119,3 @@ const upload = multer({ storage: storage });
     };
 */
 
-
-//form post become get 
-    

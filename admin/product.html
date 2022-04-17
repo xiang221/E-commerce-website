@@ -4,38 +4,87 @@
         <title>Create products</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <style>
+            *{
+                margin:0.5rem;
+                width: 90%;
+            }
+            h2{
+                text-align: center;
+                font-family: 'Roboto';
+            }
+
+        </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
-        <form action="/api/v1/create" method="POST">
-            分類:<select name="category">
-                <option value="women">女裝</option>
-                <option value="men">男裝</option>
-                <option value="accessories">配件</option>
-            </select>
+        <h2>新增商品</h2>
+        <form action="/api/v1/create" method="POST" enctype = 'multipart/form-data'>
+            <div class="form-group">
+                <label for="category">分類</label>
+                <select class="form-control" name="category">
+                  <option value="women">女裝</option>
+                  <option value="men">男裝</option>
+                  <option value="accessories">配件</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="number">產品編號</label>
+                    <input type="text" class="form-control" name="number">
+                </div>
+                <div class="col">
+                    <label for="title">產品名</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="col">
+                    <label for="price">價格</label>
+                    <input type="number" class="form-control" name="price">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="info">商品簡介</label>
+                <textarea class="form-control" id="info" name="info" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="description">說明</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+        
+            <div class="row">
+                <div class="col">
+                    <label for="color">顏色</label>
+                    <input type="color" name="color" value="#000"><br>
+                </div>
+                <div class="col">
+                    <label for="size">尺寸</label>
+                    <select name="category">
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="stock">數量</label>
+                    <input type="number" class="form-control" name="stock">
+                </div>
+            </div>
+            <div class="form-group" style="width:10%;">
+                <button type="button" class="btn btn-success" >新增</button>
+            </div>
+            <div class="form-group" >
+                <label for="pic">上傳圖片</label>
+                <input type="file" class="form-control-file" id="pic" name="pic">
+            </div>
             <br><br>
-            <label for="number">產品編號:</label>
-            <input type="text" id="number" name="number"/>
-            <br><br>
-            <label for="title">產品名:</label>
-            <input type="text" id="tiitle" name="title"/>
-            <br><br>
-            <label for="price">價格:</label>
-            <input type="number" id="price" name="price"/>
-            <br><br>
-            <label for="info">簡介:</label>
-            <input type="textbox" id="info" name="info"/>
-            <br><br>
-            <label for="description">說明:</label>
-            <input type="textbox" id="description" name="description" />
-            <br><br>
-            <label for="first_pic">上傳首圖:</label>
-            <input type="file" id="first_pic" name="first_pic">
-            <label for="pic">上傳其他圖片:</label>
-            <input type="file" id="pic" name="pic">
-            <br><br>
-            <input type="submit" value="送出" />
-        </form> 
+            <button type="submit" class="btn btn-primary" style="width:10%;">送出</button>
+        </form>
+        
+        <script>
+        
+
+        </script>
     </body>
 </html>        
 
