@@ -51,18 +51,18 @@
                 <textarea class="form-control" id="description" name="description" rows="3"></textarea>
             </div>
         
-            <div class="form-group" id="data">
+            <div class="form-group">
                 <label for="color">顏色</label>
-                <input type="color" name="color" value="#000" id="color">
+                <input type="color" value="#000" id="color">
                 <label for="size">尺寸</label>
-                <select name="size" id="size">
+                <select  id="size">
                     <option value="S">S</option>
                     <option value="M">M</option>
                     <option value="L">L</option>
                     <option value="XL">XL</option>
                 </select>
                 <label for="stock">數量</label>
-                <input type="number" name="stock" id="stock">
+                <input type="number" id="stock">
                 <button type="button" class="btn btn-success" style="margin:1rem" onclick="addnew()">新增</button>
             </div>
             <table class="table table-hover" style="margin:2rem 0rem">
@@ -74,7 +74,8 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                </tbody>
             </table>
             <br><br>
             <div class="form-group" >
@@ -98,10 +99,10 @@
             const size = document.getElementById("size").value;
             const stock = document.getElementById("stock").value;
             tbody.innerHTML += 
-            `<tr>
-                <td>${color}</td>
-                <td>${size}</td> 
-                <td>${stock}</td>
+            `<tr name="data">
+                <td name="color">${color}</td>
+                <td name="size">${size}</td> 
+                <td name="stock">${stock}</td>
                 <td><button class="btn btn-danger" onclick="deleteBtn(this.parentElement)" >刪除</button></td>
             </tr> `
 
