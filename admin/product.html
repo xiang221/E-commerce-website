@@ -79,7 +79,7 @@
             <br><br>
             <div class="form-group" >
                 <label for="pic">上傳圖片</label>
-                <input type="file" class="form-control-file" id="pic" name="pic">
+                <input type="file" class="form-control-file" id="pic" name="pic" multiple >
             </div>
             <br><br>
             <button type="submit" class="btn btn-primary" style="width:10%;">送出</button>
@@ -102,14 +102,13 @@
                 <td>${color}</td>
                 <td>${size}</td> 
                 <td>${stock}</td>
-                <td><button class="btn btn-danger" onclick="deleteBtn(e)" >刪除</button></td>
+                <td><button class="btn btn-danger" onclick="deleteBtn(this.parentElement)" >刪除</button></td>
             </tr> `
 
         }
 
         function deleteBtn(e){
-            const btn = e.targrt;
-            btn.closest("tr").remove();
+            e.parentElement.remove();
         }
 
         </script>

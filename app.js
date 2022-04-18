@@ -4,6 +4,8 @@ const app = express();
 const multer = require('multer');
 const path = require('path');
 const bodyParser = require("body-parser");
+const { v4: uuidv4 } = require('uuid');
+
 
 app.listen('3000' , () =>{
     console.log('server started on port 3000');
@@ -63,7 +65,7 @@ app.get('/api/v1/products/details/:id',async(req,res)=>{
 
 
 //Product Create API
-// SQL injection LAST_INSERT_ID() 上傳多個檔案 動態表格紀錄
+// SQL injection LAST_INSERT_ID() 動態表格紀錄 color合併 多個檔案上傳
 //Cannot set headers after they are sent to the client
 
 app.get('/api/v1/create',function(req,res){
@@ -84,27 +86,31 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
+
 app.post('/api/v1/create', upload.single('pic'),(req,res)=>{
     const body = req.body;
+    const id = uuidv4();
 
-    db.query("INSERT INTO table1 (category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?) ",[body.category, body.number, body.title, body.price, body.info, body.description, req.file.path], (err, result) => {
+    db.query("INSERT INTO table1 (uid, category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",[id, body.category, body.number, body.title, body.price, body.info, body.description, req.file.path], (err, result) => {
         if(err) throw err;
         res.send("table created"); 
     });
 
     /*
-    const id = db.query("SELECT LAST_INSERT_ID()" , (err, result) => {
+    const id = db.query("SELECT LAST_INSERT_ID()", (err, result) => {
         if(err) throw err;
         return result;
     });
     */
-    const id = 2;
 
-    db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",[id, body.color, body.size, body.stock], (err, result2) => {
-        if(err) throw err;
-        res.send("table created");     
+    const td = body.document.querySelectorAll('tbody tr td');
+
+    td.forEach( function(element){
+        db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",[id, td[0], body.size, body.stock], (err, result2) => {
+            if(err) throw err;
+            res.send("table created");     
+        });
     });
- 
 
 })
 
