@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             *{
-                margin:0.5rem;
-                width: 90%;
+                margin: 1rem;
+                box-sizing: border-box;
             }
             h2{
                 text-align: center;
@@ -51,28 +51,32 @@
                 <textarea class="form-control" id="description" name="description" rows="3"></textarea>
             </div>
         
-            <div class="row">
-                <div class="col">
-                    <label for="color">顏色</label>
-                    <input type="color" name="color" value="#000"><br>
-                </div>
-                <div class="col">
-                    <label for="size">尺寸</label>
-                    <select name="category">
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="stock">數量</label>
-                    <input type="number" class="form-control" name="stock">
-                </div>
+            <div class="form-group" id="data">
+                <label for="color">顏色</label>
+                <input type="color" name="color" value="#000" id="color">
+                <label for="size">尺寸</label>
+                <select name="size" id="size">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
+                <label for="stock">數量</label>
+                <input type="number" name="stock" id="stock">
+                <button type="button" class="btn btn-success" style="margin:1rem" onclick="addnew()">新增</button>
             </div>
-            <div class="form-group" style="width:10%;">
-                <button type="button" class="btn btn-success" >新增</button>
-            </div>
+            <table class="table table-hover" style="margin:2rem 0rem">
+                <thead>
+                  <tr>
+                    <th>顏色</th>
+                    <th>尺寸</th>
+                    <th>數量</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <br><br>
             <div class="form-group" >
                 <label for="pic">上傳圖片</label>
                 <input type="file" class="form-control-file" id="pic" name="pic">
@@ -82,7 +86,31 @@
         </form>
         
         <script>
-        
+       
+       
+       
+        const form = document.getElementById("data");
+        const tbody = document.querySelector("tbody");
+
+
+        function addnew(e){
+            const color = document.getElementById("color").value;
+            const size = document.getElementById("size").value;
+            const stock = document.getElementById("stock").value;
+            tbody.innerHTML += 
+            `<tr>
+                <td>${color}</td>
+                <td>${size}</td> 
+                <td>${stock}</td>
+                <td><button class="btn btn-danger" onclick="deleteBtn(e)" >刪除</button></td>
+            </tr> `
+
+        }
+
+        function deleteBtn(e){
+            const btn = e.targrt;
+            btn.closest("tr").remove();
+        }
 
         </script>
     </body>

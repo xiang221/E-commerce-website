@@ -63,7 +63,8 @@ app.get('/api/v1/products/details/:id',async(req,res)=>{
 
 
 //Product Create API
-// SQL injection 動態表格 儲存進不同表格 上傳多個檔案
+// SQL injection LAST_INSERT_ID() 上傳多個檔案 動態表格紀錄
+//Cannot set headers after they are sent to the client
 
 app.get('/api/v1/create',function(req,res){
     res.sendFile(__dirname + "/admin/" + "product.html" );
@@ -88,6 +89,7 @@ app.post('/api/v1/create', upload.single('pic'),(req,res)=>{
 
     db.query("INSERT INTO table1 (category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?) ",[body.category, body.number, body.title, body.price, body.info, body.description, req.file.path], (err, result) => {
         if(err) throw err;
+        res.send("table created"); 
     });
 
     /*
@@ -102,7 +104,7 @@ app.post('/api/v1/create', upload.single('pic'),(req,res)=>{
         if(err) throw err;
         res.send("table created");     
     });
-   
+ 
 
 })
 
