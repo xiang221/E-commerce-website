@@ -110,7 +110,8 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
     db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",
     [id, body.color, body.size, body.stock], 
     (err, result2) => {
-        if(err) throw err;  
+        if(err) throw err;
+        res.send("table created");   
     });
 
 
