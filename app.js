@@ -65,10 +65,10 @@ app.get('/api/v1/products/details/:id',async(req,res)=>{
 
 
 //Product Create API
-// 動態表格紀錄 多個檔案上傳
+// 動態表格紀錄
 //Cannot set headers after they are sent to the client
 
-app.get('/api/v1/create',function(req,res){
+app.get('/api/v1/create', (req,res) => {
     res.sendFile(__dirname + "/admin/" + "product.html" );
 });
 
@@ -87,8 +87,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-app.post('/api/v1/create', upload.any(),(req,res)=>{
+app.post('/api/v1/create', upload.any(),(req,res) => {
     const body = req.body;
+    console.log(body)
     const id = uuid.generate();
     const files = [];
 
@@ -98,19 +99,28 @@ app.post('/api/v1/create', upload.any(),(req,res)=>{
 
     const file = files.toString();
 
-
-    db.query("INSERT INTO table1 (uid, category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",[id, body.category, body.number, body.title, body.price, body.info, body.description, file], (err, result) => {
+    db.query("INSERT INTO table1 (uid, category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",
+    [id, body.category, body.number, body.title, body.price, body.info, body.description, file],
+     (err, result) => {
         if(err) throw err;
         res.send("table created"); 
     });
 
-    /*
-    console.log(body.color);
-    
+    console.log(id);
+    db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",
+    [id, body.color, body.size, body.stock], 
+    (err, result2) => {
+        if(err) throw err;  
+    });
+
+
+/*
+
     for(let i=0; i<body.data.length; i++){
-        db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",[id, body.color[i], body.size[i], body.stock[i]], (err, result2) => {
-            if(err) throw err;
-            res.send("table created");     
+        db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",
+        [id, body.color[i], body.size[i], body.stock[i]], 
+        (err, result2) => {
+            if(err) throw err;  
         });
     }
 
