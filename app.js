@@ -28,7 +28,7 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
     let offset = (paging * limit)+0;
     let next_paging = +paging + 1;
 
-    db.query("select title,price,color,first_pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
+    db.query("select title,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
         if (err) throw err;
         if(result[5]===undefined){
             next_paging = "no more";
@@ -45,7 +45,7 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
 
 app.get('/api/v1/products/search', (req,res) => {
     let keyword = '%'+req.query.keyword+'%';
-    db.query("SELECT title,price,first_pic,color FROM table1 WHERE title like '" +keyword+ "'", function (err,result) {
+    db.query("SELECT * FROM table1 WHERE title like '" +keyword+ "'", function (err,result) {
         if (err) throw err;
         return res.send({data: result});
     });
@@ -57,7 +57,7 @@ app.get('/api/v1/products/search', (req,res) => {
 app.get('/api/v1/products/details/:id',async(req,res)=>{
     let id = req.params.id;
     console.log(id);
-    db.query("SELECT * FROM table1, table2 WHERE table1.uid=table2.pid AND table2.pid=" +id ,(err, result) => {
+    db.query("SELECT * FROM table1, table2 WHERE table1.uid=table2.pid AND table2.pid ='" +id+ "'" ,(err, result) => {
         if (err) throw err;
         return res.send({data: result});
     });
