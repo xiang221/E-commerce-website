@@ -103,7 +103,7 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
     [id, body.category, body.number, body.title, body.price, body.info, body.description, file],
      (err, result) => {
         if(err) throw err;
-        res.send("table created"); 
+        res.redirect(__dirname + "/admin/" + "product.html" ); 
     });
 
     console.log(id);
@@ -111,7 +111,7 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
     [id, body.color, body.size, body.stock], 
     (err, result2) => {
         if(err) throw err;
-        res.send("table created");   
+        res.redirect(__dirname + "/admin/" + "product.html" );   
     });
 
 
