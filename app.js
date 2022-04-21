@@ -30,7 +30,7 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
     let offset = (paging * limit)+0;
     let next_paging = +paging + 1;
 
-    db.query("select title,number,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
+    db.query("select title,uid,number,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
         if (err) throw err;
         if(result[5]===undefined){
             next_paging = "no more";
@@ -59,7 +59,7 @@ app.get('/api/v1/products/search', (req,res) => {
 app.get('/api/v1/products/details/:id',async(req,res)=>{
     let id = req.params.id;
     console.log(id);
-    db.query("SELECT * FROM table1, table2 WHERE table1.uid=table2.pid AND table1.number ='" +id+ "'" ,(err, result) => {
+    db.query("SELECT * FROM table1, table2 WHERE table1.uid=table2.pid AND table1.uid ='" +id+ "'" ,(err, result) => {
         if (err) throw err;
         return res.send({data: result});
     });
@@ -167,8 +167,7 @@ app.post('/api/v1/signup', (req,res) => {
                 console.log("The salt is" + salt);
                 bcrypt.hash(password, salt, (err, hash) => {
                     if(err) throw err;
-                    db.query("INSERT INTO table3 (username, email, password) VALUES (?, ?, ?) ",
-                    [body.username, body.email, hash],
+                    db.query("INSERT INTO table3 (username, email, password) VALUES (?, ?, ?) ",[body.username, body.email, hash],
                      (err, result) => {
                         if(err) throw err;
                         res.send("succes");
