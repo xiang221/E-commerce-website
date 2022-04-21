@@ -5,7 +5,9 @@ const multer = require('multer');
 const path = require('path');
 const bodyParser = require("body-parser");
 const uuid = require('short-uuid');
-
+//bcrypt
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 app.listen('3000' , () =>{
     console.log('server started on port 3000');
@@ -89,7 +91,6 @@ const upload = multer({ storage: storage });
 
 app.post('/api/v1/create', upload.any(),(req,res) => {
     const body = req.body;
-    console.log(body)
     const id = uuid.generate();
     const files = [];
 
@@ -135,8 +136,6 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
 })
 
 
-
-
 //SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
 /*
     for(let i=1;i<5;i++){
@@ -146,4 +145,65 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
           });
     };
 */
+
+
+//signup API
+
+
+app.get('/api/v1/signup', (req,res) => {
+    res.sendFile(__dirname + "/admin/" + "signup.html" );
+});
+
+app.post('/api/v1/signup', (req,res) => {
+    const body = req.body;
+    const password = req.body.password;
+    db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
+        if(err) throw err;
+        console.log(result);
+        if (result!==''){
+            res.send("Already created!");
+        }else{
+            bcrypt.genSalt(saltRounds, (err, salt) => {
+                console.log("The salt is" + salt);
+                bcrypt.hash(password, salt, (err, hash) => {
+                    if(err) throw err;
+                    db.query("INSERT INTO table3 (username, email, password) VALUES (?, ?, ?) ",
+                    [body.username, body.email, hash],
+                     (err, result) => {
+                        if(err) throw err;
+                        res.send("succes");
+                    });
+                });
+            })
+        }
+    });    
+});
+
+    
+app.get('/api/v1/login', (req,res) => {
+    res.sendFile(__dirname + "/admin/" + "login.html" );
+});
+
+app.post('/api/v1/login', async (req,res)=>{
+    let { email, password } = req.body;
+    try{
+        let foundUser = db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
+            if(err) throw err;
+            return result;
+        });   
+        if (foundUser!==''){
+            bcrypt.compare(password, hash, (err, result) => {
+                if(result===true){
+                    res.send("Correct");
+                }else{
+                    res.send("Error");
+                }
+            });
+        }else{
+            res.send("Cannot find user.");
+        }
+    }catch(err){
+        throw err;
+    }
+})
 
