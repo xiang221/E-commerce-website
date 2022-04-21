@@ -184,26 +184,22 @@ app.get('/api/v1/login', (req,res) => {
     res.sendFile(__dirname + "/admin/" + "login.html" );
 });
 
-app.post('/api/v1/login', async (req,res)=>{
-    let { email, password } = req.body;
-    try{
-        let foundUser = db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
-            if(err) throw err;
-            return result;
-        });   
-        if (foundUser!==''){
-            bcrypt.compare(password, hash, (err, result) => {
-                if(result===true){
-                    res.send("Correct");
-                }else{
-                    res.send("Error");
-                }
-            });
-        }else{
-            res.send("Cannot find user.");
-        }
-    }catch(err){
-        throw err;
+app.post('/api/v1/login', (req,res)=>{
+    const body = req.body;
+    let foundUser = db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
+        if(err) throw err;
+        return result;
+    });   
+    if (foundUser===''){
+        res.send("This user doesn't exist!");
+    }else{
+        bcrypt.compare(body.password, hash, (err, result) => {
+            if(result===true){
+                res.send("Correct");
+            }else{
+                res.send("Error");
+            };
+        });
     }
 })
 
