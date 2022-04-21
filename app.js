@@ -30,7 +30,7 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
     let offset = (paging * limit)+0;
     let next_paging = +paging + 1;
 
-    db.query("select title,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
+    db.query("select title,number,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
         if (err) throw err;
         if(result[5]===undefined){
             next_paging = "no more";
