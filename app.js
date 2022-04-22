@@ -11,10 +11,15 @@ const { Console } = require('console');
 const saltRounds = 10;
 //JWT
 const jwt = require('jsonwebtoken');
+const auth = require("./auth");
+const cookieParser = require('cookie-parser');
+
 
 app.listen('3000' , () =>{
     console.log('server started on port 3000');
 })
+
+app.use(cookieParser());
 
 db.connect((err) => {
     if(err){
@@ -185,9 +190,10 @@ app.post('/api/v1/login', (req,res)=>{
             console.log("database is"+password[0].password);
             bcrypt.compare(body.password, password[0].password).then((match) => {
                 if(match) {
-                    res.send("Succes");
-                    //const token = generateAccessToken({ email: body.email });
-                    //res.json(token);
+                    const token = jwt.sign({email:body.email}, process.env["TOKEN_SECRET"], { expiresIn: '1800s' });
+                    body.email.token = token;
+                    res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
+                    res.send('succes')
                 }else{
                     res.send("Error");
                 };
@@ -197,16 +203,38 @@ app.post('/api/v1/login', (req,res)=>{
 });
 
 
-    // function generateToken(email) {
-    //     return jwt.sign(body.email, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-    //   }
 
 
-app.get('/api/v1/profile',(req,res)=>{
+
+app.get('/api/v1/profile',  (req,res)=>{
+    const token = req.cookies['jwt'];
+    console.log(req.cookies);
+    if (!token) {
+      return res.status(403).send("A token is required for authentication");
+    }
+    try {
+      const decoded = jwt.verify(token, process.env["TOKEN_SECRET"]);
+      req.user = decoded;
+    } catch (err) {
+      return res.status(401).send("Invalid Token");
+    }
     res.sendFile(__dirname + "/admin/" + "profile.html")
 });
 
-
+// function verifyToken(req, res, next){
+//     const token = req.header.cookie;
+//     console.log(req.header);
+//     if (!token) {
+//       return res.status(403).send("A token is required for authentication");
+//     }
+//     try {
+//       const decoded = jwt.verify(token, process.env["TOKEN_SECRET"]);
+//       req.user = decoded;
+//     } catch (err) {
+//       return res.status(401).send("Invalid Token");
+//     }
+//     return next();
+//   };
 
 /*
     db.query("SELECT password FROM table3 WHERE email='" +req.body.email+ "'" ,(err, password) => {
