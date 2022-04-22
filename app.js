@@ -7,7 +7,13 @@ const bodyParser = require("body-parser");
 const uuid = require('short-uuid');
 //bcrypt
 const bcrypt = require('bcrypt');
+const { Console } = require('console');
 const saltRounds = 10;
+//JWT
+const jwt = require('jsonwebtoken');
+
+
+
 
 app.listen('3000' , () =>{
     console.log('server started on port 3000');
@@ -67,7 +73,6 @@ app.get('/api/v1/products/details/:id',async(req,res)=>{
 
 
 //Product Create API
-// 動態表格紀錄
 //Cannot set headers after they are sent to the client
 
 app.get('/api/v1/create', (req,res) => {
@@ -126,18 +131,7 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
         });
     }
 
-
-    const td = body.document.querySelectorAll('tbody tr td');
-    td.forEach( function(element){]
-    });
-*/
-
-
-})
-
-
-//SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
-/*
+SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
     for(let i=1;i<5;i++){
         const color = db.query("SELECT DISTINCT color FROM table2 where pid = " +i , function (err, result) {
             if (err) throw err;
@@ -145,6 +139,7 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
           });
     };
 */
+
 
 
 //signup API
@@ -160,11 +155,10 @@ app.post('/api/v1/signup', (req,res) => {
     db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
         if(err) throw err;
         console.log(result);
-        if (result!==''){
+        if (!result){
             res.send("Already created!");
         }else{
             bcrypt.genSalt(saltRounds, (err, salt) => {
-                console.log("The salt is" + salt);
                 bcrypt.hash(password, salt, (err, hash) => {
                     if(err) throw err;
                     db.query("INSERT INTO table3 (username, email, password) VALUES (?, ?, ?) ",[body.username, body.email, hash],
@@ -178,27 +172,74 @@ app.post('/api/v1/signup', (req,res) => {
     });    
 });
 
-    
+//login API
+//!founduser
+
+// require('crypto').randomBytes(48, function(err, buffer) {
+//     var token = buffer.toString('hex');
+// });
+
 app.get('/api/v1/login', (req,res) => {
     res.sendFile(__dirname + "/admin/" + "login.html" );
 });
 
 app.post('/api/v1/login', (req,res)=>{
     const body = req.body;
-    let foundUser = db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
-        if(err) throw err;
-        return result;
-    });   
-    if (foundUser===''){
-        res.send("This user doesn't exist!");
-    }else{
-        bcrypt.compare(body.password, hash, (err, result) => {
-            if(result===true){
-                res.send("Correct");
-            }else{
-                res.send("Error");
-            };
-        });
-    }
-})
 
+    db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, foundUser) => {
+        if(err) throw err;
+        console.log(foundUser);
+        if (foundUser!==[]){
+            checkUser();
+        }else{
+            res.send("This user doesn't exist!");
+        };
+    }); 
+
+    function checkUser() {
+        const password = db.query("SELECT password FROM table3 WHERE email='" +req.body.email+ "'" ,(err, password) => {
+            if(err) throw err;
+            const hash = bcrypt.hash(body.password, saltRounds, function(err, hash) {
+                if(err) throw err;
+                console.log("input hash is"+hash);
+                return hash;
+            });
+            console.log("database is"+password[0].password);
+            bcrypt.compare(body.password, password[0].password).then((match) => {
+                if(match) {
+                    const token = generateAccessToken({ email: body.email });
+                    res.json(token);
+                }else{
+                    res.send("Error");
+                };
+            });
+        });    
+    };
+
+    function generateToken(email) {
+        return jwt.sign(body.email, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+      }
+
+});
+
+
+app.get('/api/v1/profile',(req,res)=>{
+    res.sendFile(__dirname + "/admin/" + "profile.html")
+});
+
+
+
+/*
+    db.query("SELECT password FROM table3 WHERE email='" +req.body.email+ "'" ,(err, password) => {
+            if(err) throw err;
+            console.log(password[0].password);
+            const hash = bcrypt.hash(body.password, saltRounds, (err, hash) =>{
+                console.log(hash);
+                return hash;
+            });
+            bcrypt.compare(hash, 'password[0].password', (err, result2) => {
+
+            });
+    });
+*/
+})
