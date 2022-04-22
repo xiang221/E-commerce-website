@@ -10,10 +10,7 @@ const bcrypt = require('bcrypt');
 const { Console } = require('console');
 const saltRounds = 10;
 //JWT
-
-
-
-
+const jwt = require('jsonwebtoken');
 
 app.listen('3000' , () =>{
     console.log('server started on port 3000');
@@ -121,25 +118,6 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
     });
 });
 
-/*
-
-    for(let i=0; i<body.data.length; i++){
-        db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",
-        [id, body.color[i], body.size[i], body.stock[i]], 
-        (err, result2) => {
-            if(err) throw err;  
-        });
-    }
-
-SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
-    for(let i=1;i<5;i++){
-        const color = db.query("SELECT DISTINCT color FROM table2 where pid = " +i , function (err, result) {
-            if (err) throw err;
-            return res.send({"pid":i,"color":result});
-          });
-    };
-*/
-
 
 
 //signup API
@@ -155,7 +133,7 @@ app.post('/api/v1/signup', (req,res) => {
     db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
         if(err) throw err;
         console.log(result);
-        if (!result){
+        if (result!==[]){
             res.send("Already created!");
         }else{
             bcrypt.genSalt(saltRounds, (err, salt) => {
@@ -207,8 +185,9 @@ app.post('/api/v1/login', (req,res)=>{
             console.log("database is"+password[0].password);
             bcrypt.compare(body.password, password[0].password).then((match) => {
                 if(match) {
-                    const token = generateAccessToken({ email: body.email });
-                    res.json(token);
+                    res.send("Succes");
+                    //const token = generateAccessToken({ email: body.email });
+                    //res.json(token);
                 }else{
                     res.send("Error");
                 };
@@ -223,9 +202,9 @@ app.post('/api/v1/login', (req,res)=>{
     //   }
 
 
-// app.get('/api/v1/profile',(req,res)=>{
-//     res.sendFile(__dirname + "/admin/" + "profile.html")
-// });
+app.get('/api/v1/profile',(req,res)=>{
+    res.sendFile(__dirname + "/admin/" + "profile.html")
+});
 
 
 
