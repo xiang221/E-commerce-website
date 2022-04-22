@@ -38,11 +38,11 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
 
     db.query("select title,uid,number,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
         if (err) throw err;
-        if(result[5]===undefined){
-            next_paging = "no more";
-        }else{
-            next_paging = +paging + 1;
-        }
+            if(result[5]===undefined){
+                next_paging = "no more";
+            }else{
+                next_paging = +paging + 1;
+            };
         return res.send({"page":0+paging,"next_paging":next_paging,"data": result});
     });
 
@@ -146,7 +146,7 @@ SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
 
 
 app.get('/api/v1/signup', (req,res) => {
-    res.sendFile(__dirname + "/admin/" + "signup.html" );
+    res.sendFile(__dirname + "/admin/" + "signup.html");
 });
 
 app.post('/api/v1/signup', (req,res) => {
