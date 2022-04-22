@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const { Console } = require('console');
 const saltRounds = 10;
 //JWT
-const jwt = require('jsonwebtoken');
+
 
 
 
@@ -119,7 +119,7 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
         if(err) throw err;
         res.redirect(__dirname + "/admin/" + "product.html" );   
     });
-
+});
 
 /*
 
@@ -144,10 +144,10 @@ SELECT * FROM table1 AS TableA LEFT JOIN table2 AS TableB WHERE TableA.id= 1
 
 //signup API
 
-
 app.get('/api/v1/signup', (req,res) => {
-    res.sendFile(__dirname + "/admin/" + "signup.html");
+    res.sendFile(__dirname + "/admin/" + "signup.html" );
 });
+
 
 app.post('/api/v1/signup', (req,res) => {
     const body = req.body;
@@ -215,17 +215,17 @@ app.post('/api/v1/login', (req,res)=>{
             });
         });    
     };
-
-    function generateToken(email) {
-        return jwt.sign(body.email, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-      }
-
 });
 
 
-app.get('/api/v1/profile',(req,res)=>{
-    res.sendFile(__dirname + "/admin/" + "profile.html")
-});
+    // function generateToken(email) {
+    //     return jwt.sign(body.email, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+    //   }
+
+
+// app.get('/api/v1/profile',(req,res)=>{
+//     res.sendFile(__dirname + "/admin/" + "profile.html")
+// });
 
 
 
@@ -242,4 +242,3 @@ app.get('/api/v1/profile',(req,res)=>{
             });
     });
 */
-})
