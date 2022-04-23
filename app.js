@@ -137,9 +137,7 @@ app.post('/api/v1/signup', (req,res) => {
     db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
         if(err) throw err;
         console.log(result);
-        if (result!==[]){
-            res.send("Already created!");
-        }else{
+        if (result.length===0){
             bcrypt.genSalt(saltRounds, (err, salt) => {
                 bcrypt.hash(password, salt, (err, hash) => {
                     if(err) throw err;
@@ -149,7 +147,9 @@ app.post('/api/v1/signup', (req,res) => {
                         res.send("succes");
                     });
                 });
-            })
+            });
+        }else{
+            res.send("Already created!");
         }
     });    
 });
