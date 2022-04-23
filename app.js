@@ -11,7 +11,6 @@ const { Console } = require('console');
 const saltRounds = 10;
 //JWT
 const jwt = require('jsonwebtoken');
-const auth = require("./auth");
 const cookieParser = require('cookie-parser');
 
 
@@ -158,10 +157,6 @@ app.post('/api/v1/signup', (req,res) => {
 //login API
 //!founduser
 
-// require('crypto').randomBytes(48, function(err, buffer) {
-//     var token = buffer.toString('hex');
-// });
-
 app.get('/api/v1/login', (req,res) => {
     res.sendFile(__dirname + "/admin/" + "login.html" );
 });
@@ -184,16 +179,14 @@ app.post('/api/v1/login', (req,res)=>{
             if(err) throw err;
             const hash = bcrypt.hash(body.password, saltRounds, function(err, hash) {
                 if(err) throw err;
-                console.log("input hash is"+hash);
                 return hash;
             });
-            console.log("database is"+password[0].password);
             bcrypt.compare(body.password, password[0].password).then((match) => {
                 if(match) {
                     const token = jwt.sign({email:body.email}, process.env["TOKEN_SECRET"], { expiresIn: '1800s' });
                     body.email.token = token;
-                    res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
-                    res.send('succes')
+                    res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 });
+                    res.redirect('/api/v1/profile');
                 }else{
                     res.send("Error");
                 };
@@ -204,11 +197,10 @@ app.post('/api/v1/login', (req,res)=>{
 
 
 
+//profile API
 
-
-app.get('/api/v1/profile',  (req,res)=>{
+app.get('/api/v1/profile',  (req,res) => {
     const token = req.cookies['jwt'];
-    console.log(req.cookies);
     if (!token) {
       return res.status(403).send("A token is required for authentication");
     }
@@ -220,32 +212,3 @@ app.get('/api/v1/profile',  (req,res)=>{
     }
     res.sendFile(__dirname + "/admin/" + "profile.html")
 });
-
-// function verifyToken(req, res, next){
-//     const token = req.header.cookie;
-//     console.log(req.header);
-//     if (!token) {
-//       return res.status(403).send("A token is required for authentication");
-//     }
-//     try {
-//       const decoded = jwt.verify(token, process.env["TOKEN_SECRET"]);
-//       req.user = decoded;
-//     } catch (err) {
-//       return res.status(401).send("Invalid Token");
-//     }
-//     return next();
-//   };
-
-/*
-    db.query("SELECT password FROM table3 WHERE email='" +req.body.email+ "'" ,(err, password) => {
-            if(err) throw err;
-            console.log(password[0].password);
-            const hash = bcrypt.hash(body.password, saltRounds, (err, hash) =>{
-                console.log(hash);
-                return hash;
-            });
-            bcrypt.compare(hash, 'password[0].password', (err, result2) => {
-
-            });
-    });
-*/
