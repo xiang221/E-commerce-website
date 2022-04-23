@@ -202,7 +202,7 @@ app.post('/api/v1/login', (req,res)=>{
 app.get('/api/v1/profile',  (req,res) => {
     const token = req.cookies['jwt'];
     if (!token) {
-      return res.status(403).send("A token is required for authentication");
+      return res.status(403).send("你沒有權限查看此頁");
     }
     try {
       const decoded = jwt.verify(token, process.env["TOKEN_SECRET"]);
