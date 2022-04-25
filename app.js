@@ -119,28 +119,7 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
         if(err) throw err;
         res.send('Succes created');    
     });
-<<<<<<< HEAD
-
-
-/*
-
-    for(let i=0; i<body.data.length; i++){
-        db.query("INSERT INTO table2 (pid, color, size, stock) VALUES (?, ?, ?, ?)",
-        [id, body.color[i], body.size[i], body.stock[i]], 
-        (err, result2) => {
-            if(err) throw err;  
-        });
-    }
-    const td = body.document.querySelectorAll('tbody tr td');
-    td.forEach( function(element){]
-    });
-*/
-
-
-})
-=======
 });
->>>>>>> week2
 
 
 

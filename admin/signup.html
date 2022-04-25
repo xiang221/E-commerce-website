@@ -1,39 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>註冊會員</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        *{
-            margin: 1rem 0rem;
-            box-sizing: border-box;
-            font-family: 'Roboto';
-        }
-    </style>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-</head>
-<body>
-	<div class="container">
-		<h2>註冊會員</h2>
-		<form role="form" action="/api/v1/signup" method="POST">
-            <div class="form-group">
-                <label for="username">暱稱</label>
-                <input type="text" class="form-control" id="username" name="username">
-            </div>
-            <div class="form-group">
-                <label for="email">信箱</label>
-                <input type="email" class="form-control" id="email" name="email">
-            </div>
-            <div class="form-group">
-                <label for="password">密碼</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary">註冊</button>
-			<a href="/api/v1/login">已有帳號想登入</a>
-        </form>
-	</div>
-
-
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>註冊會員</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            * {
+                margin: 1rem 0rem;
+                box-sizing: border-box;
+                font-family: 'Roboto';
+            }
+        </style>
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+            integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <h2>註冊會員</h2>
+            <form role="form" action="/api/v1/signup" method="POST">
+                <div class="form-group">
+                    <label for="username">暱稱</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        name="username"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="email">信箱</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="password">密碼</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                    />
+                </div>
+                <button type="submit" class="btn btn-primary">註冊</button>
+                <a href="/api/v1/login">已有帳號想登入</a>
+            </form>
+        </div>
+    </body>
 </html>
