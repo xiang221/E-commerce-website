@@ -74,7 +74,6 @@ app.get('/api/v1/products/details/:id',async(req,res)=>{
 
 
 //Product Create API
-//Cannot set headers after they are sent to the client
 
 app.get('/api/v1/create', (req,res) => {
     res.sendFile(__dirname + "/admin/" + "product.html" );
