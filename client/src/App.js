@@ -1,9 +1,19 @@
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from "./pages/Home";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
 
 
 function App() {
   return (
     <div>
-      <p>react環境:3</p>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="product" element={<Product />} />
+          <Route path="cart" element={<Cart />} />    
+        </Routes>
     </div>
   );
 }

@@ -1,18 +1,20 @@
-const db = require('./database');
-const express = require('express');
-const app = express();
-const multer = require('multer');
-const path = require('path');
-const bodyParser = require("body-parser");
-const uuid = require('short-uuid');
+const db = require('./database')
+const express = require('express')
+const app = express()
+const multer = require('multer')
+const path = require('path')
+const bodyParser = require("body-parser")
+const uuid = require('short-uuid')
+const cors = require('cors')
 //bcrypt
-const bcrypt = require('bcrypt');
-const { Console } = require('console');
-const saltRounds = 10;
+const bcrypt = require('bcrypt')
+const { Console } = require('console')
+const saltRounds = 10
 //JWT
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser')
 
+app.use(cors());
 
 app.listen('3000' , () =>{
     console.log('server started on port 3000');
@@ -83,6 +85,10 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 
+app.use('/static', express.static(path.join(__dirname, 'static')))
+
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
       cb(null, './images');
@@ -105,8 +111,8 @@ app.post('/api/v1/create', upload.any(),(req,res) => {
 
     const file = files.toString();
 
-    db.query("INSERT INTO table1 (uid, category, number, title, price, info, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",
-    [id, body.category, body.number, body.title, body.price, body.info, body.description, file],
+    db.query("INSERT INTO table1 (uid, category, number, title, price, info, color, description, pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ",
+    [id, body.category, body.number, body.title, body.price, body.info, body.color, body.description, file],
      (err, result) => {
         if(err) throw err;
         res.send('Succes created'); 
@@ -184,7 +190,7 @@ app.post('/api/v1/login', (req,res)=>{
                 if(match) {
                     const token = jwt.sign({email:body.email}, process.env["TOKEN_SECRET"], { expiresIn: '1800s' });
                     body.email.token = token;
-                    res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 });
+                    res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 3600000 });
                     res.redirect('/api/v1/profile');
                 }else{
                     res.send("Error");
@@ -201,7 +207,6 @@ app.post('/api/v1/login', (req,res)=>{
 app.get('/api/v1/profile',  (req,res) => {
     const token = req.cookies['jwt'];
     if (!token) {
-      return res.status(403).send("你沒有權限查看此頁");
     }
     try {
       const decoded = jwt.verify(token, process.env["TOKEN_SECRET"]);

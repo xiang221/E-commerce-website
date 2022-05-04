@@ -1,0 +1,150 @@
+*{
+    font-family: NotoSansCJKtc;
+    box-sizing: border-box;
+    margin:0;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/*Header*/
+
+.base{
+    width: 1920px;
+    height: 50px;
+    margin:1rem;
+    background-color: #fff;
+    display:flex;
+    flex: 1 0 30%;
+    flex-direction: row;
+    justify-content:  space-around;
+}
+
+.iconContainer{
+    display: flex;
+    text-align: right;
+}
+
+
+.search{
+    border: 1px solid #979797;
+    border-radius: 1rem;
+    height:0.5rem;
+    width: 10rem;
+    padding:1rem;
+}
+
+
+.logo {
+    width:12rem;
+    height:auto;
+    margin: 0rem 2rem;
+    object-fit: contain;
+}
+
+.icon {
+    width:3rem;
+    height:auto;
+    float:right;
+    object-fit: contain;
+}
+
+
+span {
+    font-family: PingFangTC;
+    font-size: 1rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    margin: 0rem 2rem;
+    letter-spacing: 1rem;
+    color: #3f3a3a;
+    display: block;
+    line-height:50px;
+}
+
+.Combined-Shape {
+    width: 214px;
+    height: 40px;
+    padding: 6px 17px 6px 20px;
+    border: solid 1px #979797;
+}
+
+
+/*List*/
+
+.homeContainer{
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    margin:4rem 12rem;
+}
+
+
+.itemContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: 'wrap';
+    flex: 1 0 30%;
+    height: 28rem;
+}
+
+.itemPic{
+    width: 13rem;
+    margin:1rem 0rem;
+}
+
+.itemColor{
+    width: 1rem;
+    height: 1rem;
+    padding: 0.5rem 0rem;
+    display:inline-block;
+}
+
+.itemText{
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-align: left;
+    color: #3f3a3a;
+    padding: 1rem 0 0 0; 
+}
+
+
+.detailContainer{
+    flex: 0 0 50%;
+    height: 30rem;
+    margin: 0.5rem;
+    width:20rem;
+}
+
+
+.itemSize{
+    display:inline-block;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius:999em;
+    background-color: #ececec;
+}
+
+
+
+.detailPic{
+    height: 30rem;
+    float:right;
+    margin:0 2rem;
+}
+
+.countBar{
+    width: 5rem;
+    height: 1rem;
+    background: #3f3a3a;
+}
+
+.detailText{
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-align: left;
+    color: #3f3a3a;
+    padding:0.5rem 0 0 0 ;
+}
