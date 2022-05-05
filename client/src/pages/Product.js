@@ -18,7 +18,7 @@ const Product = () => {
     fetchData();
   },[]);
 
-
+  console.log(Details);
 
   return (
     <div>

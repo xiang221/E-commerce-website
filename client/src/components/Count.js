@@ -2,9 +2,6 @@ import React,{useState} from 'react'
 
 const Count = (props) => {
 
-
-    console.log(props.stock);
-
     const [count, setCount] = useState(1);
     
     const increase = () =>{
@@ -21,14 +18,11 @@ const Count = (props) => {
 
     
 
-
-
-
   return (
-    <div>
-       <div onClick={decrease}> - </div>
+    <div className='amountBtn'>
+       <div onClick={decrease} style={{cursor:'pointer'}}> - </div>
        <div>{count}</div>
-       <div onClick={increase}> + </div> 
+       <div onClick={increase} style={{cursor:'pointer'}}> + </div> 
     </div>
   )
 

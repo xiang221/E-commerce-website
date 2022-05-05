@@ -6,6 +6,7 @@ const path = require('path')
 const bodyParser = require("body-parser")
 const uuid = require('short-uuid')
 const cors = require('cors')
+const axios = require('axios')
 //bcrypt
 const bcrypt = require('bcrypt')
 const { Console } = require('console')
@@ -13,6 +14,8 @@ const saltRounds = 10
 //JWT
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+
+
 
 app.use(cors());
 
@@ -190,7 +193,7 @@ app.post('/api/v1/login', (req,res)=>{
                 if(match) {
                     const token = jwt.sign({email:body.email}, process.env["TOKEN_SECRET"], { expiresIn: '1800s' });
                     body.email.token = token;
-                    res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 3600000 });
+                    res.cookie('jwt', token, { maxAge: 3600000 });
                     res.redirect('/api/v1/profile');
                 }else{
                     res.send("Error");
@@ -216,3 +219,42 @@ app.get('/api/v1/profile',  (req,res) => {
     }
     res.sendFile(__dirname + "/admin/" + "profile.html")
 });
+
+
+//checkout
+
+app.get('/api/v1/checkout', (req,res) => {
+    res.sendFile(__dirname + "/admin/" + "checkout.html" );
+});
+
+
+app.post('/pay-by-prime', (req, res) => {
+    const post_data = {
+        "prime": req.body.prime,
+        "partner_key": "partner_PHgswvYEk4QY6oy3n8X3CwiQCVQmv91ZcFoD5VrkGFXo8N7BFiLUxzeG",
+        "merchant_id": "AppWorksSchool_CTBC",
+        "amount": 100,
+        "currency": "TWD",
+        "details":"test",
+        "cardholder": {
+            "phone_number": "+886556655666",
+            "name": "xiang",
+            "email": "example@gmail.com"
+        },
+        "remember": false
+    }
+
+    axios.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', post_data, {
+        headers: {
+            'x-api-key': 'partner_PHgswvYEk4QY6oy3n8X3CwiQCVQmv91ZcFoD5VrkGFXo8N7BFiLUxzeG'
+        }
+    }).then((response) => {
+        console.log(response.data);
+        return res.json({
+            result: response.data
+        })
+    })
+
+})
+
+

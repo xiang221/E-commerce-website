@@ -2,14 +2,14 @@ import React from 'react'
 import logo from '../images/btn-logo.png'
 import shopping from '../images/btn-shopping.png'
 import member from '../images/btn-member.png'
-
+import Nav from './Nav'
 
 const Header = () => {
   return (
     <div>
         <div className='base'>
         <img src={logo} className='logo'/>
-        <span>女裝 | 男裝 | 配件</span>
+        <Nav/>
         <div className='iconContainer'>
           <input className='search'>
           </input>

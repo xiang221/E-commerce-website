@@ -25,7 +25,6 @@ console.log()
   return (
     <div>
         <Header />
-
         <List Data={Data} setData={setData}/>
     </div>
   )

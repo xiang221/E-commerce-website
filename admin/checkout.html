@@ -2,20 +2,97 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>會員頁面</title>
+	<title>金流</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://js.tappaysdk.com/tpdirect/v5.9.0"></script>
+    <script>
+        TPDirect.setupSDK(124425, 'app_9oZvJ229M8RaaHq0MqGSZuKMFLejLLOvGevvj9XDwm93scFeH11smAfwu9Jp', 'sandbox')
+    </script>
     <style>
         *{
             margin: 1rem 0rem;
             box-sizing: border-box;
             font-family: 'Roboto';
         }
+        #tappay {
+            font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+            margin: 0;
+            outline: 0;
+            -webkit-appearance: none;
+            tap-highlight-color: rgba(255,255,255,0);
+            line-height: 1.21428571em;
+            padding: .578571em 1em;
+            font-size: 1em;
+            background: #fff;
+            border: 1px solid rgba(34,36,38,.15);
+            color: rgba(0,0,0,.87);
+            border-radius: .28571429rem;
+            box-shadow: 0 0 0 0 transparent inset;
+            -webkit-transition: color .1s ease,border-color .1s ease;
+            transition: color .1s ease,border-color .1s ease;
+            width: 100%;
+        }
+
     </style>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
 </head>
 <body>
-	<div class="container">
+    <div class="ui grid centered doubling stackable">
+        <div class="six wide column">
+            <div class="ui segment">
+                <h1 class="ui header">TayPay</h1>
+                <form class="ui form">
+                    <div class="field">
+                        <label for="amount">金額</label>
+                        <input type="number" name="amount" id="amount" name="amount"/>
+                        <br><br>
+                        <label>信用卡</label>
+                        <div id="tappay"></div>
+                    </div> 
+                </form>
+                <br>
+                <div class="ui button" id="submit" onclick="onClick()">Get Prime</div>
+                <br>
+                <pre id="result1"></pre>
+                <pre id="result2"></pre>
+            </div>
+        </div>
+    </div>
+    <script>
 
-	</div>
+        const defaultCardViewStyle = {
+            color: 'rgb(0,0,0)',
+            fontSize: '15px',
+            lineHeight: '24px',
+            fontWeight: '300',
+            errorColor: 'red',
+            placeholderColor: ''
+        }
+
+        const config = { 
+            isUsedCcv: true
+        }
+
+        TPDirect.card.setup('#tappay', defaultCardViewStyle, config);
+
+        function onClick() {
+            TPDirect.card.getPrime(function (result) {
+                if (result.status !== 0) {
+                    alert('getPrime 錯誤');
+                    return
+                }
+                alert('getPrime 成功');
+                const prime = result.card.prime;
+                document.querySelector('#result1').innerHTML = JSON.stringify(result, null, 4);
+
+                $.post('/pay-by-prime', {prime: prime}, function(data) {
+                    alert('付款成功');
+                    document.querySelector('#result2').innerHTML = JSON.stringify(data, null, 4);
+                })
+            })
+        }
+
+    </script>
 </body>
 </html>

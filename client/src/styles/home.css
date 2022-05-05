@@ -49,17 +49,17 @@
 }
 
 
-span {
+.nav{
     font-family: PingFangTC;
     font-size: 1rem;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
-    margin: 0rem 2rem;
     letter-spacing: 1rem;
     color: #3f3a3a;
     display: block;
     line-height:50px;
+    text-decoration: none;
 }
 
 .Combined-Shape {
@@ -118,13 +118,18 @@ span {
 
 
 .itemSize{
-    display:inline-block;
+    display: inline-flex;
     align-items: center;
+    text-align: center;
+    flex-direction: column;
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    border-radius:999em;
+    border-radius:100%;
     background-color: #ececec;
+    color: black;
+    margin:0 0 0 0.5rem;
+    vertical-align: middle;
 }
 
 
@@ -148,3 +153,34 @@ span {
     color: #3f3a3a;
     padding:0.5rem 0 0 0 ;
 }
+
+
+.detailColor{
+    width: 1rem;
+    height: 1rem;
+    padding: 0.5rem 0rem;
+    margin: 0 1rem;
+    display:inline-block;
+}
+
+
+.cartBtn{
+    width: 16rem;
+    height: 2.5rem;
+    padding: 0.4rem;
+    margin:1rem 0;
+    background-color: black;
+    color:#fff;
+}
+
+.amountBtn{
+    display: inline-flex;
+    width: 8rem;
+    height: 2rem;
+    border: solid 1px gray;
+    margin:1rem;
+    padding:0.2rem 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
