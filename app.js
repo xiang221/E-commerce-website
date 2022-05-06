@@ -244,6 +244,13 @@ app.post('/pay-by-prime', (req, res) => {
         "remember": false
     }
 
+    db.query("INSERT INTO table4 (paidID, productID, price, status) VALUES (?, ?, ?, ?) ",
+    [ req.body.prime, post_data.details, post_data.amount, true],
+     (err, result) => {
+        if(err) throw err;
+        res.send('Succes created'); 
+    });
+
     axios.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', post_data, {
         headers: {
             'x-api-key': 'partner_PHgswvYEk4QY6oy3n8X3CwiQCVQmv91ZcFoD5VrkGFXo8N7BFiLUxzeG'

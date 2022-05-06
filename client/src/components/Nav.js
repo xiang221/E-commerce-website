@@ -10,11 +10,11 @@ const Nav = () => {
         </span>
         | 
         <span>
-            <Link to="/about">男裝</Link>
+            <Link to="/unfinished">男裝</Link>
         </span>
         | 
         <span>
-        <Link to="/about">配件</Link>
+        <Link to="/unfinished">配件</Link>
         </span>
     </nav>
   )

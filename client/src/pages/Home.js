@@ -8,10 +8,11 @@ const Home = () => {
 
   const [Data, setData] = useState([]);
 
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (category) => {
       const response = await fetch(
-        "http://localhost:3000/api/v1/products/women?paging="
+        `http://localhost:3000/api/v1/products/women?paging=`
       );
       const newData = await response.json();
       setData(newData.data);

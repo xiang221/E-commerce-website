@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React, {useEffect} from 'react'
+import shopping from '../images/btn-shopping.png'
 
 
 
 const Shopping = () => {
+
+
 
     let shoppingItem =  localStorage.getItem('number');
     if (!shoppingItem){
@@ -12,7 +14,7 @@ const Shopping = () => {
 
     
   return (
-    <div>Shopping</div>
+    <img src={shopping} className='icon'/>
   )
 
 

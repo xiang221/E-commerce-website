@@ -1,8 +1,9 @@
 import React from 'react'
 import logo from '../images/btn-logo.png'
-import shopping from '../images/btn-shopping.png'
 import member from '../images/btn-member.png'
 import Nav from './Nav'
+import Shopping from './Shopping'
+
 
 const Header = () => {
   return (
@@ -13,7 +14,7 @@ const Header = () => {
         <div className='iconContainer'>
           <input className='search'>
           </input>
-          <img src={shopping} className='icon'/>
+          <Shopping/>
           <img src={member} className='icon'/>
         </div>
         </div>
