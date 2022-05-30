@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
-    <nav className='nav'>
+    <nav className='nav' style={{textDecoration: 'none'}}>
         <span>
             <Link to="/">女裝</Link>
         </span>
         | 
         <span>
-            <Link to="/unfinished">男裝</Link>
+            <Link to="/unfinish">男裝</Link>
         </span>
         | 
         <span>
-        <Link to="/unfinished">配件</Link>
+        <Link to="/unfinish">配件</Link>
         </span>
     </nav>
   )

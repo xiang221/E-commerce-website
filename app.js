@@ -19,7 +19,7 @@ const cookieParser = require('cookie-parser')
 
 app.use(cors());
 
-app.listen('3000' , () =>{
+app.listen('5000' , () =>{
     console.log('server started on port 3000');
 })
 
@@ -41,8 +41,8 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
     let paging = +req.query.paging;
     let offset = (paging * limit)+0;
     let next_paging = +paging + 1;
-
-    db.query("select title,uid,number,price,color,pic FROM table1 WHERE category='"+category+"' limit "+limit+" offset "+offset,(err, result) => {
+    //category='"+category+"' limit "+limit+" offset "+ offset
+    db.query("select title,uid,number,price,color,pic FROM table1 WHERE category=? limit ? offset ?",[category,limit,offset],(err, result) => {
         if (err) throw err;
             if(result[5]===undefined){
                 next_paging = "no more";
@@ -59,7 +59,7 @@ app.get('/api/v1/products/:category(women|men|accessories)',(req,res) => {
 
 app.get('/api/v1/products/search', (req,res) => {
     let keyword = '%'+req.query.keyword+'%';
-    db.query("SELECT * FROM table1 WHERE title like '" +keyword+ "'", function (err,result) {
+    db.query("SELECT * FROM table1 WHERE title like=?",keyword, (err,result) =>{
         if (err) throw err;
         return res.send({data: result});
     });
@@ -71,7 +71,7 @@ app.get('/api/v1/products/search', (req,res) => {
 app.get('/api/v1/products/details/:id',async(req,res)=>{
     let id = req.params.id;
     console.log(id);
-    db.query("SELECT * FROM table1, table2 WHERE table1.uid=table2.pid AND table1.uid ='" +id+ "'" ,(err, result) => {
+    db.query("SELECT * FROM table1, table2 WHERE table1.uid=table2.pid AND table1.uid =?",id,(err, result) => {
         if (err) throw err;
         return res.send({data: result});
     });
@@ -142,7 +142,7 @@ app.get('/api/v1/signup', (req,res) => {
 app.post('/api/v1/signup', (req,res) => {
     const body = req.body;
     const password = req.body.password;
-    db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, result) => {
+    db.query("SELECT email FROM table3 WHERE email=?" ,req.body.email,(err, result) => {
         if(err) throw err;
         console.log(result);
         if (result.length===0){
@@ -172,7 +172,7 @@ app.get('/api/v1/login', (req,res) => {
 app.post('/api/v1/login', (req,res)=>{
     const body = req.body;
 
-    db.query("SELECT email FROM table3 WHERE email='" +req.body.email+ "'" ,(err, foundUser) => {
+    db.query("SELECT email FROM table3 WHERE email=?",req.body.email,(err, foundUser) => {
         if(err) throw err;
         console.log(foundUser);
         if (foundUser!==[]){
@@ -183,7 +183,7 @@ app.post('/api/v1/login', (req,res)=>{
     }); 
 
     function checkUser() {
-        const password = db.query("SELECT password FROM table3 WHERE email='" +req.body.email+ "'" ,(err, password) => {
+        const password = db.query("SELECT password FROM table3 WHERE email=?",req.body.email,(err, password) => {
             if(err) throw err;
             const hash = bcrypt.hash(body.password, saltRounds, function(err, hash) {
                 if(err) throw err;
@@ -231,8 +231,8 @@ app.get('/api/v1/checkout', (req,res) => {
 app.post('/pay-by-prime', (req, res) => {
     const post_data = {
         "prime": req.body.prime,
-        "partner_key": "partner_PHgswvYEk4QY6oy3n8X3CwiQCVQmv91ZcFoD5VrkGFXo8N7BFiLUxzeG",
-        "merchant_id": "AppWorksSchool_CTBC",
+        "partner_key": process.env["PARTNER_KEY"],
+        "merchant_id": process.env["MERCHANT_ID"],
         "amount": 100,
         "currency": "TWD",
         "details":"test",
@@ -253,7 +253,7 @@ app.post('/pay-by-prime', (req, res) => {
 
     axios.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', post_data, {
         headers: {
-            'x-api-key': 'partner_PHgswvYEk4QY6oy3n8X3CwiQCVQmv91ZcFoD5VrkGFXo8N7BFiLUxzeG'
+            'x-api-key': process.env["X_PAY_KEY"]
         }
     }).then((response) => {
         console.log(response.data);

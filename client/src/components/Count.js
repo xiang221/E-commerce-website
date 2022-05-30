@@ -1,18 +1,18 @@
-import React,{useState} from 'react'
+import React from 'react'
 
 const Count = (props) => {
 
-    const [count, setCount] = useState(1);
+
     
     const increase = () =>{
-        if(count<props.stock){
-        setCount(count+1);
+        if(props.quantity<props.stock){
+        props.setQuantity(props.quantity+1);
         }
     };
     
     const decrease = () =>{
-        if(count>0){
-        setCount(count-1);
+        if(props.quantity>0){
+        props.setQuantity(props.quantity-1);
         };
     };
 
@@ -21,7 +21,7 @@ const Count = (props) => {
   return (
     <div className='amountBtn'>
        <div onClick={decrease} style={{cursor:'pointer'}}> - </div>
-       <div>{count}</div>
+       <div>{props.quantity}</div>
        <div onClick={increase} style={{cursor:'pointer'}}> + </div> 
     </div>
   )

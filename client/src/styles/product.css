@@ -1,0 +1,140 @@
+/*List*/
+
+.homeContainer{
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    margin:4rem 12rem;
+}
+
+
+.itemContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: 'wrap';
+    flex: 1 0 30%;
+    height: 28rem;
+}
+
+.itemPic{
+    width: 13rem;
+    margin:1rem 0rem;
+}
+
+.itemColor{
+    width: 1rem;
+    height: 1rem;
+    padding: 0.5rem 0rem;
+    display:inline-block;
+}
+
+.itemText{
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-align: left;
+    color: #3f3a3a;
+    padding: 1rem 0 0 0; 
+}
+
+
+.detailContainer{
+    flex: 0 0 50%;
+    height: 30rem;
+    margin: 0.5rem;
+    width:20rem;
+}
+
+/*
+.itemSize{
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius:100%;
+    background-color: #ececec;
+    color: black;
+    margin:0 0 0 0.5rem;
+    vertical-align: middle;
+}
+*/
+
+.itemsizeContainer{
+    display: flex;
+
+}
+
+
+.itemSize {
+    width: 34px;
+    height: 34px;
+    margin:0 10px;
+    background-color: #ececec;
+    color: #3f3a3a;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.itemSize[aria-pressed=true]{
+    background: #0d0d0d;
+    border-width: 6px;
+    color: #fff;
+}
+
+.detailPic{
+    height: 30rem;
+    float:right;
+    margin:0 2rem;
+}
+
+.countBar{
+    width: 5rem;
+    height: 1rem;
+    background: #3f3a3a;
+}
+
+.detailText{
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-align: left;
+    color: #3f3a3a;
+    padding:0.5rem 0 0 0 ;
+}
+
+
+.detailColor{
+    width: 1rem;
+    height: 1rem;
+    padding: 0.5rem 0rem;
+    margin: 0 1rem;
+    display:inline-block;
+}
+
+
+.cartBtn{
+    width: 16rem;
+    height: 2.5rem;
+    padding: 0.4rem;
+    margin:1rem 0;
+    background-color: black;
+    color:#fff;
+}
+
+.amountBtn{
+    display: inline-flex;
+    width: 8rem;
+    height: 2rem;
+    border: solid 1px gray;
+    margin:1rem;
+    padding:0.2rem 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+}
+

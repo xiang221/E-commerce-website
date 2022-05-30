@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import shopping from '../images/btn-shopping.png'
-
+import { Link } from "react-router-dom";
 
 
 const Shopping = () => {
@@ -14,7 +14,7 @@ const Shopping = () => {
 
     
   return (
-    <img src={shopping} className='icon'/>
+    <Link to="/cart"><img src={shopping} className='icon' /></Link>
   )
 
 
