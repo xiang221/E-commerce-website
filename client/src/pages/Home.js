@@ -9,7 +9,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    const fetchData = async (category) => {
+    const fetchData = async () => {
       const response = await fetch(
         `http://localhost:5000/api/v1/products/women?paging=`
       );

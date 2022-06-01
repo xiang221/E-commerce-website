@@ -2,24 +2,44 @@ import React, {useEffect, useState} from 'react'
 import Header from '../components/Header'
 import Count from '../components/Count'
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { saveState } from '../cartSlice'
 import '../styles/product.css'
+import { process_params } from 'express/lib/router';
 
 
-const Product = () => {
+const Product = (props) => {
 
+  const dispatch = useDispatch()
   const params = useParams().uid
   const [Details, setDetails] = useState([])
   const [Size, setSize] = useState('')
   const [quantity, setQuantity] = useState(1);
+  const [product,setProduct] = useState()
+  const cart = useSelector((state) => state.cart)
+
 
   useEffect(() =>{
     fetch(`http://localhost:5000/api/v1/products/details/${params}`).then(
       (response) => response.json()).then((data)=>{
-        console.log(data.data)
         setDetails(data.data)
       })
   },[]);
 
+
+  useEffect(() =>{
+    if(Details.length!==0){
+      setProduct({
+        title: Details[0].title,
+        number: Details[0].number,
+        size: Size,
+        quantity: quantity,
+        color: Details[0].color,
+        price: Details[0].price
+      })
+      console.log(product)
+    }
+  },[Details]);
 
 
   const addToCart = () =>{
@@ -27,23 +47,19 @@ const Product = () => {
       alert('please select size')
       return 
     }
-    let product = [
-      ...
-      {
-      title: Details[0].title,
-      number: Details[0].number,
-      size: Size,
-      quantity: quantity,
-      color: Details[0].color,
-      price: Details[0].price
-      }
-    ]  
-    let cart = localStorage.getItem("products")
+    let NewCart = [
+      ...props.cart,
+      product,
+    ]
+    dispatch(saveState(product))
 
-    localStorage.setItem("products", ...product)
-    console.log(product)
+    localStorage.setItem('cart', JSON.stringify(NewCart))
+    //props.setCart(NewCart)
+    console.log('click')
   }
-
+  console.log(cart)
+  // 
+  // localStorage.setItem("products", ...product)
 
   return (
     <>

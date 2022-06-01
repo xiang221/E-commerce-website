@@ -16,6 +16,12 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 
 
+const frontendPath = __dirname + '/views'
+app.use(express.static(frontendPath))
+app.get('/', function (req,res) {
+    res.sendFile(frontendPath + "/index.html");
+});
+
 
 app.use(cors());
 

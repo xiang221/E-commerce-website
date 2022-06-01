@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import Header from '../components/Header'
-import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton } from '../styles/cart'
+import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay } from '../styles/cart'
 
 const Cart = (props) => {
 
@@ -10,6 +10,33 @@ const Cart = (props) => {
   const [address, setAddress] = useState('');
   const [time, setTime] = useState();
 
+  const defaultCardViewStyle = {
+    color: 'rgb(0,0,0)',
+    fontSize: '15px',
+    lineHeight: '24px',
+    fontWeight: '300',
+    errorColor: 'red',
+    placeholderColor: ''
+}
+
+  const config = { 
+      isUsedCcv: true
+  }
+
+  // TPDirect.setupSDK(124425, 'app_9oZvJ229M8RaaHq0MqGSZuKMFLejLLOvGevvj9XDwm93scFeH11smAfwu9Jp', 'sandbox')
+  // TPDirect.card.setup('#tappay', defaultCardViewStyle, config);
+
+  // function onClick() {
+  //     TPDirect.card.getPrime(function (result) {
+  //         if (result.status !== 0) {
+  //             alert('getPrime 錯誤');
+  //             return
+  //         }
+  //         alert('getPrime 成功');
+  //         const prime = result.card.prime;
+
+  //     })
+  // }
 
 
   return (
@@ -92,7 +119,10 @@ const Cart = (props) => {
         </FormRadio>
       </FormBlock>
     </CartForm>
-
+    <CartForm>
+      <h5>付款資料</h5>
+      <Tappay id="tappay"/>
+    </CartForm>
     <Amount>
       <div>總金額</div>
       <Dollar>NT.</Dollar>

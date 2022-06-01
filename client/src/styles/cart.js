@@ -74,6 +74,26 @@ const Dollar = styled.div`
   margin-left: auto;
 `
 
+const Tappay =styled.div`
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  margin: 0;
+  outline: 0;
+  -webkit-appearance: none;
+  tap-highlight-color: rgba(255,255,255,0);
+  line-height: 1.21428571em;
+  padding: .578571em 1em;
+  font-size: 1em;
+  background: #fff;
+  border: 1px solid rgba(34,36,38,.15);
+  color: rgba(0,0,0,.87);
+  border-radius: .28571429rem;
+  box-shadow: 0 0 0 0 transparent inset;
+  -webkit-transition: color .1s ease,border-color .1s ease;
+  transition: color .1s ease,border-color .1s ease;
+  width: 100%;
+
+`
+
 
 const CartButton = styled.button`
   width: 250px;
@@ -88,4 +108,4 @@ const CartButton = styled.button`
 `
 
   
-  export {CartContainer, CartItem, Shipment, ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton };
+  export {CartContainer, CartItem, Shipment, ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay };

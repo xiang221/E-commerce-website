@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./pages/Home";
@@ -8,13 +8,17 @@ import Unfinish from "./pages/Unfinish";
 
 
 function App() {
+
+  const [cart, setCart] = useState([])
+
+
   return (
     <div>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="product/:uid" element={<Product />} />
-          <Route path="cart" element={<Cart />} />  
-          <Route path="unfinish" element={<Unfinish/>}/>
+          <Route path="/" element={<Home  cart={cart} setCart={setCart} />} />
+          <Route path="product/:uid" element={<Product cart={cart} setCart={setCart}/>} />
+          <Route path="cart" element={<Cart />} cart={cart} setCart={setCart} />  
+          <Route path="unfinish" element={<Unfinish/>} cart={cart} setCart={setCart}/>
         </Routes>
     </div>
   );
