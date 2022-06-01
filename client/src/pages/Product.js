@@ -41,23 +41,31 @@ const Product = (props) => {
     }
   },[Details]);
 
+  let NewCart
 
   const addToCart = () =>{
     if(Size===''){
       alert('please select size')
       return 
     }
-    let NewCart = [
+    NewCart = [
       ...props.cart,
       product,
     ]
-    dispatch(saveState(product))
+    // dispatch(saveState(product))
+    console.log('new', JSON.stringify(NewCart));
+    try {
+      localStorage.setItem('cart', JSON.stringify(NewCart))
+      props.setCart(NewCart)
+      console.log('click')
+    } catch (err) {
+      console.error(err)
+    }
 
-    localStorage.setItem('cart', JSON.stringify(NewCart))
-    //props.setCart(NewCart)
-    console.log('click')
+
   }
-  console.log(cart)
+  //console.log('cart',NewCart)
+  //console.log(cart)
   // 
   // localStorage.setItem("products", ...product)
 
@@ -67,7 +75,7 @@ const Product = (props) => {
     {Details.length!==0?(
     <div className='homeContainer'>
     <div className='detailContainer'>
-      <img className='detailPic' src= {`http://localhost:3000/static/${Details[0].pic}`}/>
+      <img className='detailPic' src= {`http://localhost:5000/static/${Details[0].pic}`}/>
     </div>        
     <div className='detailContainer'>
       <div className='detailText' style={{ fontSize: '1.5rem'}}> {Details[0].title}</div>

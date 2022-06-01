@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import shopping from '../images/btn-shopping.png'
 import { Link } from "react-router-dom";
 

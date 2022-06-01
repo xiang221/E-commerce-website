@@ -8,6 +8,8 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
       saveState(state,action){
+        console.log('state',state)
+        console.log('action',action)
         state.push(action.payload);
       },
       cleardata(){

@@ -9,8 +9,14 @@ import Unfinish from "./pages/Unfinish";
 
 function App() {
 
+  // const getCart = () =>{
+  //   const cartItem = localStorage.getItem('cart')
+  //   const result = JSON.parse(cartItem) || [];
+  //   console.log('result', result)
+  //   return result
+  // }
   const [cart, setCart] = useState([])
-
+  // console.log('state', cart)
 
   return (
     <div>
