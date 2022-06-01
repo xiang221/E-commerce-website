@@ -90,7 +90,7 @@ const Tappay =styled.div`
   box-shadow: 0 0 0 0 transparent inset;
   -webkit-transition: color .1s ease,border-color .1s ease;
   transition: color .1s ease,border-color .1s ease;
-  width: 100%;
+  width: 40%;
 
 `
 

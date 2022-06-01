@@ -1,5 +1,7 @@
+/* eslint-disable */
 import React,{useState, useEffect} from 'react'
 import Header from '../components/Header'
+import { useDispatch, useSelector } from 'react-redux'
 import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay } from '../styles/cart'
 
 const Cart = (props) => {
@@ -10,10 +12,15 @@ const Cart = (props) => {
   const [address, setAddress] = useState('');
   const [time, setTime] = useState();
 
+
+  const cart = useSelector((state) => state.cart)
+  console.log(cart)
+
+
   const defaultCardViewStyle = {
     color: 'rgb(0,0,0)',
     fontSize: '15px',
-    lineHeight: '24px',
+    lineHeight: '20px',
     fontWeight: '300',
     errorColor: 'red',
     placeholderColor: ''
@@ -23,20 +30,22 @@ const Cart = (props) => {
       isUsedCcv: true
   }
 
-  // TPDirect.setupSDK(124425, 'app_9oZvJ229M8RaaHq0MqGSZuKMFLejLLOvGevvj9XDwm93scFeH11smAfwu9Jp', 'sandbox')
-  // TPDirect.card.setup('#tappay', defaultCardViewStyle, config);
+  useEffect(()=>{
+    TPDirect.setupSDK(124425, 'app_9oZvJ229M8RaaHq0MqGSZuKMFLejLLOvGevvj9XDwm93scFeH11smAfwu9Jp', 'sandbox')
+    TPDirect.card.setup('#tappay', defaultCardViewStyle, config);
+  },[])
 
-  // function onClick() {
-  //     TPDirect.card.getPrime(function (result) {
-  //         if (result.status !== 0) {
-  //             alert('getPrime 錯誤');
-  //             return
-  //         }
-  //         alert('getPrime 成功');
-  //         const prime = result.card.prime;
 
-  //     })
-  // }
+  function onClick() {
+      TPDirect.card.getPrime(function (result) {
+          if (result.status !== 0) {
+              alert('getPrime 錯誤');
+              return
+          }
+          alert('getPrime 成功');
+          const prime = result.card.prime;
+      })
+  }
 
 
   return (
@@ -96,7 +105,7 @@ const Cart = (props) => {
             <input
               type="radio"
               checked={time === 'morning'}
-              onChange={(e) => {  if (e.target.checked) setTime('morning')}}
+              onChange={(e) => { if(e.target.checked){ setTime('morning')}}}
             />
             08:00-12:00
           </label>
@@ -121,7 +130,10 @@ const Cart = (props) => {
     </CartForm>
     <CartForm>
       <h5>付款資料</h5>
-      <Tappay id="tappay"/>
+      <FormBlock>
+        <FormText>信用卡</FormText>
+        <Tappay id="tappay"/>
+      </FormBlock>
     </CartForm>
     <Amount>
       <div>總金額</div>

@@ -20,14 +20,14 @@ const Home = () => {
   },[]);
 
 
-
+  //localStorage.setItem('test','111')
   return (
     <div>
         <Header />
         <div className='homeContainer' style={{flexWrap: 'wrap'}}>
         { Data.map(({ uid, title, price, color, pic}) => (
         <a className='itemContainer' key={uid}  href={`/product/${uid}`}>
-        <img className='itemPic' src= {`/static/${pic}`}/> 
+        <img className='itemPic' src= {`http://localhost:5000/static/${pic}`}/> 
         <div className="itemColor" style={{backgroundColor:color}}></div>
         <div className="itemText">{title}</div>
         <div className="itemText">TWD.{price}</div>

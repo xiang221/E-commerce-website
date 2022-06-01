@@ -13,7 +13,7 @@ const Product = (props) => {
   const dispatch = useDispatch()
   const params = useParams().uid
   const [Details, setDetails] = useState([])
-  const [Size, setSize] = useState('')
+  const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState(1);
   const [product,setProduct] = useState()
   const cart = useSelector((state) => state.cart)
@@ -32,42 +32,37 @@ const Product = (props) => {
       setProduct({
         title: Details[0].title,
         number: Details[0].number,
-        size: Size,
+        size: size,
         quantity: quantity,
         color: Details[0].color,
         price: Details[0].price
       })
       console.log(product)
     }
-  },[Details]);
+  });
 
   let NewCart
 
   const addToCart = () =>{
-    if(Size===''){
+    if(size===''){
       alert('please select size')
       return 
     }
-    NewCart = [
-      ...props.cart,
-      product,
-    ]
-    // dispatch(saveState(product))
-    console.log('new', JSON.stringify(NewCart));
-    try {
-      localStorage.setItem('cart', JSON.stringify(NewCart))
-      props.setCart(NewCart)
-      console.log('click')
-    } catch (err) {
-      console.error(err)
-    }
-
-
+    // NewCart = [
+    //   ...props.cart,
+    //   product,
+    // ]
+    dispatch(saveState(product))
   }
-  //console.log('cart',NewCart)
-  //console.log(cart)
-  // 
-  // localStorage.setItem("products", ...product)
+
+    // try {
+    //   localStorage.setItem('cart', JSON.stringify(NewCart))
+    //   props.setCart(NewCart)
+    //   console.log('click')
+    // } catch (err) {
+    //   console.error(err)
+    // }
+
 
   return (
     <>
@@ -87,10 +82,10 @@ const Product = (props) => {
       </div>
       <div className='itemText'>尺寸 |
         <div className='itemsizeContainer'>            
-        <div className='itemSize' value="S" aria-pressed={(Size==='S'?"true":"false")} onClick={()=>setSize('S')}>S</div>
-        <div className='itemSize' value="M" aria-pressed={(Size==='M'?"true":"false")} onClick={()=>setSize('M')}>M</div>
-        <div className='itemSize' value="L" aria-pressed={(Size==='L'?"true":"false")} onClick={()=>setSize('L')}>L</div>
-        <div className='itemSize' value="XL" aria-pressed={(Size==='XL'?"true":"false")} onClick={()=>setSize('XL')}>XL</div>
+        <div className='itemSize' value="S" aria-pressed={(size==='S'?"true":"false")} onClick={()=>setSize('S')}>S</div>
+        <div className='itemSize' value="M" aria-pressed={(size==='M'?"true":"false")} onClick={()=>setSize('M')}>M</div>
+        <div className='itemSize' value="L" aria-pressed={(size==='L'?"true":"false")} onClick={()=>setSize('L')}>L</div>
+        <div className='itemSize' value="XL" aria-pressed={(size==='XL'?"true":"false")} onClick={()=>setSize('XL')}>XL</div>
         </div>
       </div>
       <div className='detailText'>數量 |

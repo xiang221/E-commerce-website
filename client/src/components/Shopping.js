@@ -8,9 +8,9 @@ const Shopping = () => {
 
 
     let shoppingItem =  localStorage.getItem('number');
-    if (!shoppingItem){
-        localStorage.clear();
-    };
+    // if (!shoppingItem){
+    //     //localStorage.clear();
+    // };
 
     
   return (

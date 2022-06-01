@@ -9,8 +9,10 @@ const Header = () => {
   return (
     <div>
         <div className='base'>
+        <div>
         <img src={logo} className='logo'/>
         <Nav/>
+        </div>
         <div className='iconContainer'>
           <input className='search'>
           </input>
