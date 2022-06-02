@@ -1,0 +1,51 @@
+
+.profileContainer{
+    width:auto;
+    margin:50px 100px;
+}
+
+
+
+.profileTextContainer{
+    text-align: center;
+}
+
+.profileText{
+    font-size: 2rem;
+    margin: 0 10px 30px 0;
+    display: inline-block;
+}
+
+
+.logContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:0 0 10px 0 ;
+}
+
+.logText{
+  margin:10px 10px 10px 0;
+  font-size: 1.3rem;
+}
+
+.logInput{
+  width: 30%;
+  height: 30px;
+  border: solid 1px #979797;
+  border-radius: 8px;
+}
+
+.logBtnContsainer{
+    display:flex;
+    justify-content: center;
+}
+
+.logBtn{
+    width:80px;
+    height:40px;
+    margin:30px 0;
+    background-color: black;
+    color:aliceblue;
+    font-size:16px;
+}

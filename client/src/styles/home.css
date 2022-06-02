@@ -89,3 +89,17 @@
     margin-left: auto;
     display: block;
 } 
+
+.footer{
+    background-color:#313538;
+    height:30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.wrapper{
+    position: relative;
+    min-height: 100vh;
+    padding:0 0 100px 0;
+}
