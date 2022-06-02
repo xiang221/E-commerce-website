@@ -82,7 +82,7 @@ const Cart = (props) => {
         <>
           <CartItemContainer>
           <CartItemIntro>
-          <CartItemPic src= {`http://localhost:5000/static/${data.pic}`}/>
+          <CartItemPic src= {`http://35.78.45.3/static/${data.pic}`}/>
           <CartItemContent>
           <p>{data.title}</p>
           <p>{data.number}</p>
