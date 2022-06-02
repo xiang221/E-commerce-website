@@ -2,7 +2,7 @@
 import React,{useState, useEffect} from 'react'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
-import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay } from '../styles/cart'
+import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer } from '../styles/cart'
 
 const Cart = (props) => {
 
@@ -46,13 +46,33 @@ const Cart = (props) => {
           const prime = result.card.prime;
       })
   }
-
+  // title: Details[0].title,
+  // number: Details[0].number,
+  // size: size,
+  // quantity: quantity,
+  // color: Details[0].color,
+  // price: Details[0].price
 
   return (
     <>
     <Header/>
     <CartContainer>
       <CartItem>
+        {cart.map((data,index)=>
+        <>
+          <CartItemContainer>
+          <CartItemPic src= {`http://localhost:5000/static/${data.pic}`}/>
+          <CartItemContent>
+          <p>{data.title}</p>
+          <p>{data.number}</p>
+          <p>顏色 | <div className='detailColor' style={{ backgroundColor: data.color }}></div></p>
+          <p>尺寸 | {data.size}</p>
+          </CartItemContent>
+          <p>{data.quantity}</p>
+          <p>{data.price}</p>
+          <p>{data.price*data.quantity}</p>
+          </CartItemContainer>
+        </>)}
       </CartItem>
       <Shipment>
         <div>配送國家</div>

@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <div>
         <div className='base'>
-        <div>
+        <div className='logoContainer'>
         <img src={logo} className='logo'/>
         <Nav/>
         </div>

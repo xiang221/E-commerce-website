@@ -107,5 +107,22 @@ const CartButton = styled.button`
   display: block;
 `
 
+
+
+const CartItemContainer = styled.div`
+  display:flex;
+  flex-direction:row;
+`
+
+
+const CartItemContent = styled.div`
+  display:flex;
+  flex-direction:column;
+
+`
+
+const CartItemPic = styled.img`
+  width:130px;
+`
   
-  export {CartContainer, CartItem, Shipment, ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay };
+  export {CartContainer, CartItem, Shipment, ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer };

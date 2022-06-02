@@ -16,7 +16,7 @@ const Product = (props) => {
   const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState(1);
   const [product,setProduct] = useState()
-  const cart = useSelector((state) => state.cart)
+
 
 
   useEffect(() =>{
@@ -35,7 +35,8 @@ const Product = (props) => {
         size: size,
         quantity: quantity,
         color: Details[0].color,
-        price: Details[0].price
+        price: Details[0].price,
+        pic: Details[0].pic
       })
       console.log(product)
     }
@@ -82,10 +83,7 @@ const Product = (props) => {
       </div>
       <div className='itemText'>尺寸 |
         <div className='itemsizeContainer'>            
-        <div className='itemSize' value="S" aria-pressed={(size==='S'?"true":"false")} onClick={()=>setSize('S')}>S</div>
-        <div className='itemSize' value="M" aria-pressed={(size==='M'?"true":"false")} onClick={()=>setSize('M')}>M</div>
-        <div className='itemSize' value="L" aria-pressed={(size==='L'?"true":"false")} onClick={()=>setSize('L')}>L</div>
-        <div className='itemSize' value="XL" aria-pressed={(size==='XL'?"true":"false")} onClick={()=>setSize('XL')}>XL</div>
+        <div className='itemSize' value={Details[0].size} aria-pressed={(size===Details[0].size?"true":"false")} onClick={()=>setSize(Details[0].size)}>{Details[0].size}</div>
         </div>
       </div>
       <div className='detailText'>數量 |
