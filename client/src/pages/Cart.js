@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React,{useState, useEffect} from 'react'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Count from '../components/Count'
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import {FiTrash2} from 'react-icons/fi' 
@@ -9,14 +11,15 @@ import {cleardata} from '../cartSlice'
 import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer, CartItemColor,CartItemPrice, CartItemIntro, CartText, CartItemQuantity } from '../styles/cart'
 import '../styles/home.css'
 import { diskStorage } from 'multer';
+import { use } from 'bcrypt/promises'
 
 const Cart = (props) => {
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [time, setTime] = useState();
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [time, setTime] = useState()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   let navigate = useNavigate()
@@ -63,6 +66,7 @@ const Cart = (props) => {
   }
 
 
+
   let total=0
 
   if(cart.length>0){
@@ -74,7 +78,7 @@ const Cart = (props) => {
 
 
   return (
-    <>
+    <div className='wrapper'>
     <Header/>
     <CartContainer>
       <CartItem>
@@ -90,10 +94,7 @@ const Cart = (props) => {
           <p>尺寸 | {data.size}</p>
           </CartItemContent>
           </CartItemIntro>
-          <CartItemQuantity value={data.quantity}>
-
-            <option key={data.quantity}>{data.quantity}</option>
-          </CartItemQuantity>
+          <CartItemQuantity value={data.quantity} onChange={(e)=>{data.quantity=e.target.value}}/>
           <CartText>{data.price}</CartText>
           <CartText>{data.price*data.quantity}</CartText>
           <FiTrash2 style={{fontSize:'20px',marginTop:'1px',cursor:'pointer'}} onClick={()=>dispatch(removedata(index))}/>
@@ -198,7 +199,8 @@ const Cart = (props) => {
       確認付款
     </CartButton>
   </CartContainer>
-  </>
+  <Footer/>
+  </div>
   )
 }
 

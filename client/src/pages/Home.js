@@ -1,28 +1,31 @@
 import React, {useEffect, useState} from 'react'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+import { useParams } from "react-router-dom";
 import '../styles/home.css'
 
 const Home = () => {
 
 
   const [Data, setData] = useState([]);
+  const params = useParams().category
 
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://35.78.45.3/api/v1/products/women?paging=`
+        `http://35.78.45.3/api/v1/products/${params}?paging=`
       );
       const newData = await response.json();
       setData(newData.data);
     };
     fetchData();
-  },[]);
+  });
 
 
   //localStorage.setItem('test','111')
   return (
-    <div>
+    <div className='wrapper'>
         <Header />
         <div className='outerContainer'>
         <div className='homeContainer' style={{flexWrap: 'wrap'}}>
@@ -36,6 +39,7 @@ const Home = () => {
         ))}
       </div>
       </div>
+      <Footer/>
     </div>
   )
 }

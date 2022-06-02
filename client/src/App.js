@@ -6,6 +6,7 @@ import Product from "./pages/Product"
 import Cart from "./pages/Cart"
 import Thank from "./pages/Thank"
 import Unfinish from "./pages/Unfinish"
+import Profile from "./pages/Profile"
 
 
 function App() {
@@ -15,17 +16,18 @@ function App() {
   //   const result = JSON.parse(cartItem) || [];
   //   return result
   // }
-  const [cart, setCart] = useState([])
+
 
 
   return (
     <div>
         <Routes>
-          <Route path="/" element={<Home  cart={cart} setCart={setCart} />} />
-          <Route path="product/:uid" element={<Product cart={cart} setCart={setCart}/>} />
-          <Route path="cart" element={<Cart />} cart={cart} setCart={setCart} />  
-          <Route path="thankyou" element={<Thank />} cart={cart} setCart={setCart} />  
-          <Route path="unfinish" element={<Unfinish/>} cart={cart} setCart={setCart}/>
+          <Route path="/:category" element={<Home />} />
+          <Route path="product/:uid" element={<Product />} />
+          <Route path="cart" element={<Cart />}/>  
+          <Route path="thankyou" element={<Thank />} />  
+          <Route path="unfinish" element={<Unfinish/>} />
+          <Route path="profile" element={<Profile/>} />
         </Routes>
     </div>
   );

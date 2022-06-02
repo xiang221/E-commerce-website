@@ -99,7 +99,7 @@ const Tappay =styled.div`
 const CartButton = styled.button`
   width: 250px;
   height: 50px;
-  margin: 50px 0;
+  margin: 50px 0 0 0;
   background-color: black;
   color: white;
   font-size: 20px;
@@ -108,7 +108,7 @@ const CartButton = styled.button`
   display: block;
 `
 
-export const CartItemQuantity= styled.select`
+export const CartItemQuantity= styled.input`
   width: 70px;
   height: 30px;
   padding-left: 13px;

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Header from '../components/Header'
 import Count from '../components/Count'
+import Footer from '../components/Footer';
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { saveState } from '../cartSlice'
@@ -14,9 +15,9 @@ const Product = (props) => {
   const params = useParams().uid
   const [Details, setDetails] = useState([])
   const [size, setSize] = useState('')
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [product,setProduct] = useState()
-
+  console.log(params)
 
 
   useEffect(() =>{
@@ -34,6 +35,7 @@ const Product = (props) => {
         number: Details[0].number,
         size: size,
         quantity: quantity,
+        stock:Details[0].stock,
         color: Details[0].color,
         price: Details[0].price,
         pic: Details[0].pic
@@ -67,7 +69,7 @@ const Product = (props) => {
 
 
   return (
-    <>
+    <div className='wrapper'>
     <Header/>
     <div className='outerContainer'>
     {Details.length!==0?(
@@ -96,7 +98,8 @@ const Product = (props) => {
     </div>    
     </div>):null}
     </div>
-    </>
+    <Footer/>
+    </div>
   )
 }
 
