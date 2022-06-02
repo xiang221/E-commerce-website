@@ -2,7 +2,10 @@
 import React,{useState, useEffect} from 'react'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
-import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer } from '../styles/cart'
+import {FiTrash2} from 'react-icons/fi' 
+import { removedata } from '../cartSlice'
+import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer, CartItemColor,CartItemPrice, CartItemIntro, CartText } from '../styles/cart'
+import '../styles/cart'
 
 const Cart = (props) => {
 
@@ -12,7 +15,7 @@ const Cart = (props) => {
   const [address, setAddress] = useState('');
   const [time, setTime] = useState();
 
-
+  const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   console.log(cart)
 
@@ -46,12 +49,15 @@ const Cart = (props) => {
           const prime = result.card.prime;
       })
   }
-  // title: Details[0].title,
-  // number: Details[0].number,
-  // size: size,
-  // quantity: quantity,
-  // color: Details[0].color,
-  // price: Details[0].price
+
+
+
+  const total = cart.map((data)=>data.price*data.quantity)
+    .reduce((accumulator, currentValue) => {
+      return accumulator + currentValue
+    });
+
+
 
   return (
     <>
@@ -61,16 +67,19 @@ const Cart = (props) => {
         {cart.map((data,index)=>
         <>
           <CartItemContainer>
+          <CartItemIntro>
           <CartItemPic src= {`http://localhost:5000/static/${data.pic}`}/>
           <CartItemContent>
           <p>{data.title}</p>
           <p>{data.number}</p>
-          <p>顏色 | <div className='detailColor' style={{ backgroundColor: data.color }}></div></p>
+          <p>顏色 | <CartItemColor style={{ backgroundColor: data.color }}/></p>
           <p>尺寸 | {data.size}</p>
           </CartItemContent>
-          <p>{data.quantity}</p>
-          <p>{data.price}</p>
-          <p>{data.price*data.quantity}</p>
+          </CartItemIntro>
+          <CartText>{data.quantity}</CartText>
+          <CartText>{data.price}</CartText>
+          <CartText>{data.price*data.quantity}</CartText>
+          <FiTrash2 style={{fontSize:'20px',marginTop:'1px',cursor:'pointer'}} onClick={()=>dispatch(removedata(index))}/>
           </CartItemContainer>
         </>)}
       </CartItem>
@@ -152,20 +161,20 @@ const Cart = (props) => {
       <h5>付款資料</h5>
       <FormBlock>
         <FormText>信用卡</FormText>
-        <Tappay id="tappay"/>
+        <Tappay id="tappay" style={{marginLeft:'30px'}}/>
       </FormBlock>
     </CartForm>
     <Amount>
       <div>總金額</div>
-      <Dollar>NT.</Dollar>
+      <Dollar>NT. {total}</Dollar>
     </Amount>
     <Amount  style={{borderBottom: '1px solid #3f3a3a', paddingBottom: '20px'}}>
       <div>運費</div>
-      <Dollar>NT.</Dollar>
+      <Dollar>NT. 30</Dollar>
     </Amount>
     <Amount>
       <div>應付金額</div>
-      <Dollar>NT.</Dollar>
+      <Dollar>NT. {total+30}</Dollar>
     </Amount>
     <CartButton>
       確認付款

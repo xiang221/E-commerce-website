@@ -6,7 +6,7 @@ const CartContainer = styled.div`
 `
   
 const CartItem = styled.div`
-  padding: 40px 30px;
+  padding: 20px 30px;
   margin-top: 16px;
   border: solid 1px #979797;
 `
@@ -72,6 +72,7 @@ const Amount = styled.div`
 
 const Dollar = styled.div`
   margin-left: auto;
+  font-size:20px;
 `
 
 const Tappay =styled.div`
@@ -112,17 +113,44 @@ const CartButton = styled.button`
 const CartItemContainer = styled.div`
   display:flex;
   flex-direction:row;
+  margin:30px 20px 30px 10px;
+  justify-content:space-between;
 `
 
+export const CartItemIntro = styled.div`
+  display:flex;
+  flex-direction:row;
+`
 
 const CartItemContent = styled.div`
+  width:160px;
   display:flex;
   flex-direction:column;
-
+  padding:0 20px;
 `
 
 const CartItemPic = styled.img`
   width:130px;
 `
   
-  export {CartContainer, CartItem, Shipment, ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer };
+const CartItemColor = styled.div`
+  width: 1rem;
+  height: 1rem;
+  padding: 0.5rem 0rem;
+  display:inline-block;
+`
+
+export const CartItemPrice = styled.div`
+  display:flex;
+  justify-content:flex-end;
+
+`
+
+export const CartText = styled.div`
+  font-size:1.1rem;
+`
+
+
+
+
+export {CartContainer, CartItem, Shipment, ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer, CartItemColor };

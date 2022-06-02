@@ -38,7 +38,6 @@ const Product = (props) => {
         price: Details[0].price,
         pic: Details[0].pic
       })
-      console.log(product)
     }
   });
 
@@ -49,13 +48,15 @@ const Product = (props) => {
       alert('please select size')
       return 
     }
+    dispatch(saveState(product))
+    alert('已加入購物車')
+  }
+
+
     // NewCart = [
     //   ...props.cart,
     //   product,
     // ]
-    dispatch(saveState(product))
-  }
-
     // try {
     //   localStorage.setItem('cart', JSON.stringify(NewCart))
     //   props.setCart(NewCart)
