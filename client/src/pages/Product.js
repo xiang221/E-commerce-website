@@ -20,7 +20,7 @@ const Product = (props) => {
 
 
   useEffect(() =>{
-    fetch(`http://localhost:5000/api/v1/products/details/${params}`).then(
+    fetch(`http://localhost:3000/api/v1/products/details/${params}`).then(
       (response) => response.json()).then((data)=>{
         setDetails(data.data)
       })
@@ -73,7 +73,7 @@ const Product = (props) => {
     {Details.length!==0?(
     <div className='homeContainer'>
     <div className='detailContainer'>
-      <img className='detailPic' src= {`http://localhost:5000/static/${Details[0].pic}`}/>
+      <img className='detailPic' src= {`http://localhost:3000/static/${Details[0].pic}`}/>
     </div>        
     <div className='detailContainer'>
       <div className='detailText' style={{ fontSize: '1.5rem'}}> {Details[0].title}</div>
