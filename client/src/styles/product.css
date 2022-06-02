@@ -1,23 +1,27 @@
 /*List*/
 
+.outerContainer{
+    padding:40px 0;
+}
+
 .homeContainer{
     display: flex;
     flex-direction: row; 
     justify-content: center;
-    margin:4rem 12rem;
+    width:1000px;
+    margin:auto;
 }
 
 
 .itemContainer{
     display: flex;
+    margin:5px 50px;
     flex-direction: column;
-    flex-wrap: 'wrap';
-    flex: 1 0 30%;
-    height: 28rem;
+    width: 200px;
 }
 
 .itemPic{
-    width: 13rem;
+    width: 200px;
     margin:1rem 0rem;
 }
 
@@ -69,9 +73,10 @@
 
 
 .itemSize {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     margin:0 10px;
+    padding-left:2px;
     background-color: #ececec;
     color: #3f3a3a;
     border-radius: 50%;

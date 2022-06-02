@@ -69,6 +69,7 @@ const Product = (props) => {
   return (
     <>
     <Header/>
+    <div className='outerContainer'>
     {Details.length!==0?(
     <div className='homeContainer'>
     <div className='detailContainer'>
@@ -94,6 +95,7 @@ const Product = (props) => {
       <div className='detailText'>{Details[0].info}</div>
     </div>    
     </div>):null}
+    </div>
     </>
   )
 }

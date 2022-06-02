@@ -91,7 +91,7 @@ const Tappay =styled.div`
   box-shadow: 0 0 0 0 transparent inset;
   -webkit-transition: color .1s ease,border-color .1s ease;
   transition: color .1s ease,border-color .1s ease;
-  width: 40%;
+  width: 50%;
 
 `
 
@@ -106,6 +106,14 @@ const CartButton = styled.button`
   letter-spacing: 4px;
   margin-left: auto;
   display: block;
+`
+
+export const CartItemQuantity= styled.select`
+  width: 70px;
+  height: 30px;
+  padding-left: 13px;
+  border-radius: 5px;
+  border: solid 1px #979797;
 `
 
 
@@ -136,6 +144,7 @@ const CartItemPic = styled.img`
 const CartItemColor = styled.div`
   width: 1rem;
   height: 1rem;
+  margin-left:5px;
   padding: 0.5rem 0rem;
   display:inline-block;
 `

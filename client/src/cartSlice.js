@@ -13,13 +13,16 @@ export const cartSlice = createSlice({
       removedata(state,action){
         return [...state.slice(0, action.payload),
         ...state.slice(action.payload + 1)]
+      },
+      cleardata(){
+        return initialState
       }
     },
   })
 
 
 
-export const { saveState,removedata } = cartSlice.actions
+export const { saveState,removedata,cleardata } = cartSlice.actions
 
 export default cartSlice.reducer  
   

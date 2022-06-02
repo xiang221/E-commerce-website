@@ -21,6 +21,13 @@
     justify-content: flex-start;
 }
 
+.logo {
+    width:12rem;
+    height:auto;
+    margin: 0rem 2rem;
+    object-fit: contain;
+}
+
 
 .iconContainer{
     display: flex;
@@ -34,22 +41,10 @@
     height:0.5rem;
     width: 10rem;
     padding:1rem;
+    margin:0 10px;
 }
 
 
-.logo {
-    width:12rem;
-    height:auto;
-    margin: 0rem 2rem;
-    object-fit: contain;
-}
-
-.icon {
-    width:3rem;
-    height:auto;
-    float:right;
-    object-fit: contain;
-}
 
 
 .nav{
@@ -83,3 +78,14 @@
 }
 
 
+.cartBtn{
+    width: 250px;
+    height: 50px;
+    margin: 50px 0;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin-left: auto;
+    display: block;
+} 

@@ -1,7 +1,6 @@
 import React from 'react'
-import shopping from '../images/btn-shopping.png'
 import { Link } from "react-router-dom";
-
+import {BsCart} from 'react-icons/bs'
 
 const Shopping = () => {
 
@@ -14,7 +13,7 @@ const Shopping = () => {
 
     
   return (
-    <Link to="/cart"><img src={shopping} className='icon' /></Link>
+    <Link to="/cart"><BsCart style={{fontSize:'30px', margin:'0 10px'}}/></Link>
   )
 
 

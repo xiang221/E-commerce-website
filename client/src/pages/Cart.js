@@ -1,11 +1,14 @@
 /* eslint-disable */
 import React,{useState, useEffect} from 'react'
 import Header from '../components/Header'
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import {FiTrash2} from 'react-icons/fi' 
 import { removedata } from '../cartSlice'
-import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer, CartItemColor,CartItemPrice, CartItemIntro, CartText } from '../styles/cart'
-import '../styles/cart'
+import {cleardata} from '../cartSlice'
+import {CartContainer,CartItem,Shipment,ShipmentSelect, CartForm, FormBlock, FormInput, FormText, FormRadio, Amount, Dollar, CartButton, Tappay, CartItemContent, CartItemPic, CartItemContainer, CartItemColor,CartItemPrice, CartItemIntro, CartText, CartItemQuantity } from '../styles/cart'
+import '../styles/home.css'
+import { diskStorage } from 'multer';
 
 const Cart = (props) => {
 
@@ -14,11 +17,9 @@ const Cart = (props) => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [time, setTime] = useState();
-
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
-  console.log(cart)
-
+  let navigate = useNavigate()
 
   const defaultCardViewStyle = {
     color: 'rgb(0,0,0)',
@@ -39,24 +40,37 @@ const Cart = (props) => {
   },[])
 
 
-  function onClick() {
+  function getPrime() {
       TPDirect.card.getPrime(function (result) {
           if (result.status !== 0) {
-              alert('getPrime 錯誤');
+              alert('信用卡填寫錯誤')
+              event.preventDefault()
               return
           }
-          alert('getPrime 成功');
-          const prime = result.card.prime;
+          alert('付款成功')
+          const prime = result.card.prime
+          dispatch(cleardata())
+          navigate('/thankyou')
       })
   }
 
+  const submitOrder = () =>{
+    if((name&&email&&phone&&address&&time)===''){
+      alert('請填寫完整訂購資料')
+      event.preventDefault()
+    }
+    getPrime()
+  }
 
 
-  const total = cart.map((data)=>data.price*data.quantity)
+  let total=0
+
+  if(cart.length>0){
+    total = cart.map((data)=>data.price*data.quantity)
     .reduce((accumulator, currentValue) => {
       return accumulator + currentValue
     });
-
+  }
 
 
   return (
@@ -72,11 +86,14 @@ const Cart = (props) => {
           <CartItemContent>
           <p>{data.title}</p>
           <p>{data.number}</p>
-          <p>顏色 | <CartItemColor style={{ backgroundColor: data.color }}/></p>
+          <p style={{alignItems: 'center', display: 'flex'}}>顏色 | <CartItemColor style={{ backgroundColor: data.color }}/></p>
           <p>尺寸 | {data.size}</p>
           </CartItemContent>
           </CartItemIntro>
-          <CartText>{data.quantity}</CartText>
+          <CartItemQuantity value={data.quantity}>
+
+            <option key={data.quantity}>{data.quantity}</option>
+          </CartItemQuantity>
           <CartText>{data.price}</CartText>
           <CartText>{data.price*data.quantity}</CartText>
           <FiTrash2 style={{fontSize:'20px',marginTop:'1px',cursor:'pointer'}} onClick={()=>dispatch(removedata(index))}/>
@@ -96,7 +113,6 @@ const Cart = (props) => {
       ※ 提醒您：
       <br />● 選擇宅配-請填寫正確收件人資訊，避免包裹配送不達
       <br />● 選擇超商-請填寫正確收件人姓名(與證件相符)，避免無法領取
-
       <CartForm>
       <h5>訂購資料</h5>
       <FormBlock>
@@ -104,6 +120,7 @@ const Cart = (props) => {
         <FormInput
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
       </FormBlock>
       <FormBlock>
@@ -125,6 +142,7 @@ const Cart = (props) => {
         <FormInput
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+          required
         />
       </FormBlock>
       <FormBlock>
@@ -176,7 +194,7 @@ const Cart = (props) => {
       <div>應付金額</div>
       <Dollar>NT. {total+30}</Dollar>
     </Amount>
-    <CartButton>
+    <CartButton onClick={()=>submitOrder()}>
       確認付款
     </CartButton>
   </CartContainer>

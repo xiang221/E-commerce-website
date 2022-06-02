@@ -24,6 +24,7 @@ const Home = () => {
   return (
     <div>
         <Header />
+        <div className='outerContainer'>
         <div className='homeContainer' style={{flexWrap: 'wrap'}}>
         { Data.map(({ uid, title, price, color, pic}) => (
         <a className='itemContainer' key={uid}  href={`/product/${uid}`}>
@@ -33,6 +34,7 @@ const Home = () => {
         <div className="itemText">TWD.{price}</div>
         </a>
         ))}
+      </div>
       </div>
     </div>
   )
